@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>متن إتمام المطالب — كليب الزهراني</title>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;500;600;700&family=Lateef:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link crossorigin="anonymous" href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;500;600;700&family=Lateef:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════
    ROOT VARIABLES & THEMES
@@ -599,6 +599,18 @@ button,input,select{font-family:inherit}
   font-family:var(--font);
 }
 #srch-inp:focus{border-color:var(--c-accent)}
+.srch-mode-wrap{
+  display:flex;flex-wrap:wrap;gap:6px;
+  padding:0 16px 12px;border-bottom:1px solid var(--c-border);
+  flex-shrink:0;
+}
+.srch-mode-btn{
+  background:var(--c-bg2);border:1px solid var(--c-border);color:var(--c-text2);
+  border-radius:20px;padding:5px 11px;font-size:11.5px;cursor:pointer;font-family:var(--font);
+  transition:all .15s;
+}
+.srch-mode-btn:hover{border-color:var(--c-gold)}
+.srch-mode-btn.active{background:var(--c-accent);color:#fff;border-color:var(--c-accent)}
 #srch-count{
   padding:9px 16px;font-size:12.5px;color:var(--c-text3);
   border-bottom:1px solid var(--c-border);
@@ -714,6 +726,184 @@ button,input,select{font-family:inherit}
 .sb-btn:hover{background:rgba(212,168,32,.2)}
 
 /* ═══════════════════════════════════════════════
+   CARD EXPORT MODAL
+═══════════════════════════════════════════════ */
+.card-ov{z-index:700}
+.card-ov.open{display:flex;align-items:center;justify-content:center;padding:16px}
+.card-modal{
+  position:relative;width:920px;max-width:100%;max-height:92vh;
+  background:var(--c-surface);border-radius:16px;
+  box-shadow:0 20px 70px rgba(0,0,0,.4);
+  display:flex;flex-direction:column;overflow:hidden;
+  animation:fadeUp .22s ease both;
+}
+.card-modal .panel-head{background:var(--c-header);color:var(--c-htext);border-bottom:none}
+.card-modal .panel-head .panel-title{color:var(--c-htext)}
+.card-modal .panel-close{border-color:rgba(212,168,32,.35);color:var(--c-htext)}
+.card-modal-body{
+  flex:1;overflow-y:auto;padding:18px 20px 20px;
+  display:flex;flex-wrap:wrap;align-items:flex-start;gap:18px;
+}
+
+/* --- Card preview stage: takes the lion's share of the width --- */
+.card-stage{
+  flex:3 1 420px;min-width:280px;align-self:stretch;
+  background:repeating-linear-gradient(45deg,rgba(0,0,0,.035) 0 10px,transparent 10px 20px),var(--c-bg2);
+  border:1px solid var(--c-border);border-radius:12px;
+  padding:26px 16px;text-align:center;overflow-x:auto;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* --- The exportable card itself --- */
+#card-preview{
+  display:inline-block;text-align:right;vertical-align:top;
+  width:520px;max-width:100%;
+  padding:34px 30px 66px;
+  box-sizing:border-box;
+  font-family:var(--card-ff,'Scheherazade New',serif);
+  color:var(--card-fc,#2a1a08);
+  background:var(--card-bg,#faf6ed);
+  position:relative;
+}
+#card-preview[data-bg=parchment]{background:#faf6ed}
+#card-preview[data-bg=white]{background:#ffffff}
+#card-preview[data-bg=dark]{background:#1b120a}
+#card-preview[data-bg=green]{background:#eef4ec}
+
+.card-head{text-align:center;margin-bottom:14px;padding-bottom:16px;border-bottom:1.5px solid rgba(140,28,28,.25)}
+.card-book-title{font-size:20px;font-weight:700;color:var(--c-accent);line-height:1.6}
+.card-book-author{font-size:13px;margin-top:5px;opacity:.75}
+.card-source{font-size:12.5px;opacity:.65;margin-bottom:12px;text-align:center;font-weight:600}
+#card-body{
+  outline:none;min-height:70px;
+  font-size:var(--card-fs,19px);line-height:1.9;text-align:center;
+}
+#card-body:focus{background:rgba(212,168,32,.05);border-radius:6px}
+.card-foot{margin-top:20px;padding-top:12px;border-top:1px solid rgba(140,28,28,.15);text-align:center;font-size:11.5px;opacity:.55}
+.card-datetime{position:absolute;bottom:10px;right:14px;font-size:9.5px;line-height:1.6;opacity:.55;text-align:right;max-width:190px}
+
+/* --- Frame variants --- */
+#card-preview.frame-none{border:none}
+#card-preview.frame-simple{border:2px solid var(--c-accent);border-radius:10px}
+#card-preview.frame-gold{
+  border:3px double #a67c00;border-radius:6px;
+  box-shadow:0 0 0 6px rgba(166,124,0,.08) inset;
+}
+#card-preview.frame-classic{border:1px solid #a67c00;border-radius:4px;position:relative}
+#card-preview.frame-classic::before,#card-preview.frame-classic::after{
+  content:'❧';position:absolute;font-size:20px;color:#a67c00;opacity:.7;
+}
+#card-preview.frame-classic::before{top:6px;right:10px}
+#card-preview.frame-classic::after{bottom:6px;left:10px;transform:rotate(180deg)}
+#card-preview.frame-dashed{border:2px dashed var(--c-text3);border-radius:8px}
+
+/* --- Sidebar: compact, narrow options column --- */
+.card-sidebar{
+  flex:1 1 220px;min-width:200px;max-width:260px;
+  display:flex;flex-direction:column;gap:12px;
+}
+.card-opts{display:flex;flex-direction:column;gap:12px}
+.card-opt-lbl{font-size:11px;font-weight:700;color:var(--c-gold);margin-bottom:5px;display:block}
+.card-opt select,.card-opt input[type=range]{
+  width:100%;background:var(--c-bg2);border:1px solid var(--c-border);
+  border-radius:7px;padding:6px 9px;font-size:12.5px;color:var(--c-text);font-family:inherit;
+}
+.card-opt input[type=color]{
+  width:100%;height:30px;border:1px solid var(--c-border);border-radius:7px;
+  background:var(--c-bg2);cursor:pointer;padding:2px;
+}
+.card-opt-row{display:flex;align-items:center;gap:8px}
+.card-opt-row span{font-size:11px;color:var(--c-text3);min-width:22px;text-align:center}
+
+.card-opt-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.card-opt-toggle input{position:absolute;opacity:0;width:0;height:0}
+.cp-toggle-track{
+  position:relative;flex-shrink:0;width:36px;height:20px;border-radius:12px;
+  background:var(--c-bg3);border:1px solid var(--c-border);transition:background .18s;
+}
+.cp-toggle-dot{
+  position:absolute;top:1px;right:1px;width:16px;height:16px;border-radius:50%;
+  background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .18s;
+}
+.card-opt-toggle input:checked + .cp-toggle-track{background:var(--c-accent);border-color:var(--c-accent)}
+.card-opt-toggle input:checked + .cp-toggle-track .cp-toggle-dot{transform:translateX(-16px)}
+
+.card-actions{display:flex;flex-direction:column;gap:8px;padding-top:10px;border-top:1px solid var(--c-border)}
+.card-act-btn{
+  width:100%;padding:11px 12px;border-radius:9px;border:none;
+  cursor:pointer;font-size:13.5px;font-weight:700;font-family:var(--font);
+  display:flex;align-items:center;justify-content:center;gap:7px;transition:all .15s;
+}
+.card-act-btn.primary{background:var(--c-accent);color:#fff}
+.card-act-btn.primary:hover{background:var(--c-accent2)}
+.card-act-btn:disabled{opacity:.6;cursor:wait}
+.card-act-btn.secondary{background:var(--c-bg2);color:var(--c-text);border:1px solid var(--c-border)}
+.card-act-btn.secondary:hover{border-color:var(--c-gold)}
+.card-hint{font-size:11px;color:var(--c-text3);text-align:center;line-height:1.7}
+
+@media(max-width:700px){
+  .card-stage{flex-basis:100%}
+  .card-sidebar{flex-basis:100%;max-width:none}
+}
+
+/* ═══════════════════════════════════════════════
+   SHARE FAB + POPOVER
+═══════════════════════════════════════════════ */
+#share-fab-wrap{
+  position:fixed;bottom:82px;left:28px;z-index:95;
+}
+#share-fab{
+  display:flex;align-items:center;gap:8px;
+  background:var(--c-accent);color:#fff;border:none;
+  padding:11px 16px 11px 14px;border-radius:30px;cursor:pointer;
+  box-shadow:0 4px 18px rgba(140,28,28,.45);
+  font-family:var(--font);font-size:13.5px;font-weight:700;
+  transition:all .18s;
+}
+#share-fab:hover{background:var(--c-accent2);transform:translateY(-3px)}
+#share-fab .sf-ic{font-size:17px}
+@media(max-width:800px){
+  #share-fab .sf-txt{display:none}
+  #share-fab{padding:12px;border-radius:50%}
+}
+
+#share-pop{
+  position:absolute;bottom:calc(100% + 12px);left:0;
+  width:290px;max-width:80vw;
+  background:var(--c-surface);border:1px solid var(--c-border);
+  border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.28);
+  padding:14px 16px 16px;
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:all .18s ease;
+}
+#share-fab-wrap:hover #share-pop,
+#share-fab-wrap.open #share-pop{
+  opacity:1;visibility:visible;transform:translateY(0);
+}
+.sp-title{font-weight:700;font-size:14px;color:var(--c-accent);margin-bottom:8px}
+.sp-list{display:flex;flex-direction:column;gap:7px;margin-bottom:4px}
+.sp-item{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;line-height:1.7;color:var(--c-text2)}
+.sp-num{
+  flex-shrink:0;width:19px;height:19px;border-radius:50%;
+  background:var(--c-accent);color:#fff;font-size:10.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;margin-top:1px;
+}
+.share-steps{display:flex;flex-direction:column;gap:14px}
+.share-step{display:flex;gap:12px;align-items:flex-start}
+.share-step-num{
+  flex-shrink:0;width:26px;height:26px;border-radius:50%;
+  background:var(--c-accent);color:#fff;font-size:12.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+.share-step-txt{font-size:14px;line-height:1.9;color:var(--c-text2)}
+.share-step-txt b{color:var(--c-accent)}
+.share-app-row{display:flex;gap:10px;margin-top:4px;flex-wrap:wrap}
+.share-app-chip{
+  display:flex;align-items:center;gap:6px;background:var(--c-bg2);
+  border:1px solid var(--c-border);border-radius:20px;padding:6px 13px;font-size:12.5px;
+}
+
+/* ═══════════════════════════════════════════════
    LOADING
 ═══════════════════════════════════════════════ */
 #loader{
@@ -776,11 +966,37 @@ button,input,select{font-family:inherit}
 
 /* RESPONSIVE */
 @media(max-width:800px){
-  :root{--sidebar-w:270px}
-  #sidebar{transform:translateX(var(--sidebar-w))}
+  :root{--sidebar-w:82vw}
+  #sidebar{max-width:320px}
   #main{margin-right:0}
   #h-search-wrap{display:none}
   .h-btns .hb-tip::after{display:none}
+}
+
+/* SIDEBAR OVERLAY (mobile only) */
+#sb-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:190;
+  opacity:0;
+  transition:opacity .3s ease;
+}
+#sb-overlay.show{display:block;opacity:1}
+@media(max-width:800px){
+  #sidebar{z-index:201}
+}
+
+/* Better touch targets on mobile */
+@media(max-width:800px){
+  .nav-book-btn{padding:13px 16px}
+  .nav-bab-btn{padding:10px 36px 10px 16px}
+  #h-toggle{min-width:44px;min-height:44px}
+  .hb{min-width:40px;min-height:40px}
+}
+button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
 }
 </style>
 </head>
@@ -797,11 +1013,15 @@ button,input,select{font-family:inherit}
 
 <!-- SELECTION BAR -->
 <div id="sel-bar">
-  <button class="sb-btn" onclick="doSelCopy()">📋 نسخ</button>
-  <button class="sb-btn" onclick="doSelSearch()">🔍 بحث</button>
+  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="doSelCopy()">📋 نسخ</button>
+  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="doSelSearch()">🔍 بحث</button>
+  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="openCardExport()">🖼️ تصدير بطاقة</button>
 </div>
 
 <div id="app">
+
+<!-- ═══ SIDEBAR OVERLAY (mobile) ═══ -->
+<div id="sb-overlay" onclick="closeSidebarMobile()"></div>
 
 <!-- ═══ SIDEBAR ═══ -->
 <aside id="sidebar">
@@ -861,9 +1081,15 @@ button,input,select{font-family:inherit}
       <div class="panel-title">البحث في الكتاب</div>
       <button class="panel-close" onclick="closeSearch()">✕</button>
     </div>
-    <div id="srch-inp-wrap" style="padding:14px 16px;border-bottom:1px solid var(--c-border);flex-shrink:0">
-      <input id="srch-inp" type="text" placeholder="ابحث عن نص في الكتاب…"
+    <div id="srch-inp-wrap" style="padding:14px 16px 10px;border-bottom:1px solid var(--c-border);flex-shrink:0">
+      <input id="srch-inp" type="text" placeholder="ابحث عن نص في الكتاب… (بلا حاجة للتشكيل)"
         oninput="doSearch(this.value)">
+    </div>
+    <div id="srch-mode-wrap" class="srch-mode-wrap">
+      <button type="button" class="srch-mode-btn active" data-mode="partial" onclick="setSearchMode('partial',this)">بعض كلمة</button>
+      <button type="button" class="srch-mode-btn" data-mode="word" onclick="setSearchMode('word',this)">الكلمة كما هي</button>
+      <button type="button" class="srch-mode-btn" data-mode="phrase" onclick="setSearchMode('phrase',this)">الجملة كما هي</button>
+      <button type="button" class="srch-mode-btn" data-mode="scattered" onclick="setSearchMode('scattered',this)">ولو متفرقة</button>
     </div>
     <div id="srch-count" class="srch-count"></div>
     <div class="panel-body" id="srch-results"></div>
@@ -957,12 +1183,114 @@ button,input,select{font-family:inherit}
   </div>
 </div>
 
+<!-- ═══ CARD EXPORT MODAL ═══ -->
+<div class="overlay card-ov" id="card-ov" onclick="closeCardExport()">
+  <div class="card-modal" onclick="event.stopPropagation()">
+    <div class="panel-head">
+      <span style="font-size:18px">🖼️</span>
+      <div class="panel-title">تصدير بطاقة اقتباس</div>
+      <button class="panel-close" onclick="closeCardExport()">✕</button>
+    </div>
+    <div class="card-modal-body">
+
+      <!-- Preview stage -->
+      <div class="card-stage">
+        <div id="card-preview" class="frame-gold" data-bg="parchment">
+          <div class="card-head">
+            <div class="card-book-title" id="cp-book-title">إتمام المطالب بتكميل دليل الطالب</div>
+            <div class="card-book-author" id="cp-book-author">تأليف: كُلَيب بن أحمد بن ضيف الله الزهراني</div>
+          </div>
+          <div class="card-source" id="cp-source"></div>
+          <div id="card-body" contenteditable="true" spellcheck="false"></div>
+          <div class="card-foot">📖 متن إتمام المطالب</div>
+          <div class="card-datetime" id="cp-datetime"></div>
+        </div>
+      </div>
+
+      <!-- Sidebar: compact options + actions -->
+      <div class="card-sidebar">
+        <div class="card-opts">
+          <div class="card-opt">
+            <label class="card-opt-lbl">إطار البطاقة</label>
+            <select onchange="setCardFrame(this.value)">
+              <option value="frame-gold" selected>ذهبي مزدوج</option>
+              <option value="frame-classic">كلاسيكي مزخرف</option>
+              <option value="frame-simple">بسيط</option>
+              <option value="frame-dashed">متقطّع</option>
+              <option value="frame-none">بدون إطار</option>
+            </select>
+          </div>
+          <div class="card-opt">
+            <label class="card-opt-lbl">خلفية البطاقة</label>
+            <select onchange="setCardBg(this.value)">
+              <option value="parchment" selected>ورقي كلاسيكي</option>
+              <option value="white">أبيض ناصع</option>
+              <option value="dark">داكن أنيق</option>
+              <option value="green">أخضر هادئ</option>
+            </select>
+          </div>
+          <div class="card-opt">
+            <label class="card-opt-lbl">نوع الخط</label>
+            <select onchange="setCardFont(this.value)">
+              <option value="'Scheherazade New',serif" selected>شهرزاد</option>
+              <option value="'Amiri',serif">أميري</option>
+              <option value="'Lateef',serif">لطيف</option>
+              <option value="Tahoma,Arial,sans-serif">حديث (Tahoma)</option>
+            </select>
+          </div>
+          <div class="card-opt">
+            <label class="card-opt-lbl">لون الخط</label>
+            <input type="color" id="cp-color-inp" value="#2a1a08" oninput="setCardColor(this.value)">
+          </div>
+          <div class="card-opt">
+            <label class="card-opt-lbl">حجم الخط</label>
+            <div class="card-opt-row">
+              <span id="cp-fs-val">19</span>
+              <input type="range" min="14" max="34" value="19" oninput="setCardSize(this.value)">
+            </div>
+          </div>
+          <div class="card-opt">
+            <label class="card-opt-toggle">
+              <input type="checkbox" id="cp-date-toggle" checked onchange="toggleCardDate(this.checked)">
+              <span class="cp-toggle-track"><span class="cp-toggle-dot"></span></span>
+              <span class="card-opt-lbl" style="margin:0">إظهار اليوم والتاريخ</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card-hint">✏️ يمكنك تعديل نص البطاقة والمصدر مباشرة بالنقر عليهما قبل التصدير</div>
+
+        <div class="card-actions">
+          <button class="card-act-btn primary" onclick="downloadCard()">⬇️ تنزيل الصورة</button>
+          <button class="card-act-btn secondary" id="card-share-btn" onclick="shareCard()">📤 مشاركة مباشرة</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHARE FAB + POPOVER ═══ -->
+<div id="share-fab-wrap">
+  <button id="share-fab" onclick="toggleSharePop(event)">
+    <span class="sf-ic">📤</span><span class="sf-txt">شارك في النشر</span>
+  </button>
+  <div id="share-pop" onclick="event.stopPropagation()">
+    <div class="sp-title">📤 كيف تُشارك بطاقة اقتباس؟</div>
+    <div class="sp-list">
+      <div class="sp-item"><span class="sp-num">١</span><span>ظلّل أي نص من الكتاب، ثم اضغط <b>🖼️ تصدير بطاقة</b> من الشريط الذي يظهر فوقه.</span></div>
+      <div class="sp-item"><span class="sp-num">٢</span><span>خصّص الإطار والخلفية والخط، وعدّل النص إن أردت.</span></div>
+      <div class="sp-item"><span class="sp-num">٣</span><span>اضغط <b>📤 مشاركة مباشرة</b> لإرسالها لواتساب أو تيليجرام مباشرة، أو <b>⬇️ تنزيل</b> لحفظها.</span></div>
+    </div>
+  </div>
+</div>
+
 <!-- BACK TO TOP -->
 <button id="btt" onclick="scrollTop()">↑</button>
 
 <!-- TOAST -->
 <div id="toast"><span id="toast-icon"></span><span id="toast-txt"></span></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 // ╔═══════════════════════════════════════════╗
 // ║                   DATA                    ║
@@ -1015,6 +1343,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // Events
   window.addEventListener('scroll', onScroll, {passive:true});
   document.addEventListener('selectionchange', onSel);
+  document.addEventListener('mouseup', onSel);
+  document.addEventListener('touchend', onSel, {passive:true});
   document.addEventListener('keydown', onKey);
 });
 
@@ -1093,6 +1423,7 @@ function closeSidebarMobile() {
   S.sidebarOpen = false;
   document.getElementById('sidebar').classList.add('closed');
   document.getElementById('main').classList.add('no-sidebar');
+  document.getElementById('sb-overlay').classList.remove('show');
 }
 
 // ╔═══════════════════════════════════════════╗
@@ -1268,7 +1599,9 @@ function scrollToBab(babi) {
   if (!el) return;
   el.classList.add('open');
   setTimeout(() => {
-    el.scrollIntoView({behavior:'smooth',block:'start'});
+    // انتقال فوري (بلا تمرير سلس) حتى لا "يمرّ" العرض بصرياً على الأبواب
+    // السابقة أثناء نزوله نحو الباب الهدف.
+    el.scrollIntoView({behavior:'auto',block:'start'});
     el.style.outline = '2px solid var(--c-gold2)';
     setTimeout(() => el.style.outline = '', 1800);
   }, 50);
@@ -1305,6 +1638,77 @@ function closeSearch() {
   document.getElementById('h-search').value = '';
   setHeader(S.book!=null ? B[S.book].title : 'متن إتمام المطالب');
 }
+// ── محرك بحث يتجاهل التشكيل، ويدعم عدة أنماط مطابقة ──
+const AR_DIAC = '\\u0610-\\u061A\\u064B-\\u065F\\u06D6-\\u06DC\\u06DF-\\u06E8\\u06EA-\\u06ED\\u0670\\u0640';
+const AR_DIAC_RE = new RegExp('['+AR_DIAC+']','g');
+const WORDCHAR = '\\u0621-\\u064A\\u0660-\\u0669A-Za-z0-9';
+function stripDiac(s) { return (s||'').replace(AR_DIAC_RE,''); }
+function escRe(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+// يبني نمط بحث "متساهلاً" يتجاوز أي تشكيل موجود في النص الأصلي بين حروف الكلمة
+function lenientPattern(str) {
+  const clean = stripDiac(str).trim();
+  return clean.split('').map(ch => /\s/.test(ch) ? '\\s+' : (escRe(ch) + '[' + AR_DIAC + ']*')).join('');
+}
+let _searchMode = 'partial';
+function setSearchMode(mode, btn) {
+  _searchMode = mode;
+  document.querySelectorAll('.srch-mode-btn').forEach(b=>b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  doSearch(document.getElementById('srch-inp').value);
+}
+// يعيد {index, length} لأول تطابق حسب النمط المختار، أو null إن لم يوجد
+function findMatch(text, query, mode) {
+  if (!text) return null;
+  const clean = stripDiac(query).trim();
+  if (!clean) return null;
+  try {
+    if (mode === 'scattered') {
+      const words = clean.split(/\s+/).filter(Boolean);
+      let firstIdx = -1;
+      for (const w of words) {
+        const re = new RegExp('(?:^|[^'+WORDCHAR+'])('+lenientPattern(w)+')(?=[^'+WORDCHAR+']|$)');
+        const m = re.exec(text);
+        if (!m) return null; // إحدى الكلمات غير موجودة إطلاقاً
+        const start = m.index + (m[0].length - m[1].length);
+        if (firstIdx===-1 || start<firstIdx) firstIdx = start;
+      }
+      return {index:firstIdx, length:1};
+    }
+    if (mode === 'word' || mode === 'phrase') {
+      const re = new RegExp('(?:^|[^'+WORDCHAR+'])('+lenientPattern(clean)+')(?=[^'+WORDCHAR+']|$)');
+      const m = re.exec(text);
+      if (!m) return null;
+      const start = m.index + (m[0].length - m[1].length);
+      return {index:start, length:m[1].length};
+    }
+    // partial (افتراضي): جزء من كلمة، في أي مكان
+    const re = new RegExp(lenientPattern(clean));
+    const m = re.exec(text);
+    if (!m) return null;
+    return {index:m.index, length:m[0].length};
+  } catch(e) { return null; }
+}
+// تمييز كل التطابقات داخل نص مقتطف (snippet) بعلامة <mark>
+function hlLenient(txt, query, mode) {
+  const clean = stripDiac(query).trim();
+  if (!clean) return txt;
+  try {
+    if (mode === 'scattered') {
+      let result = txt;
+      clean.split(/\s+/).filter(Boolean).forEach(w=>{
+        const re = new RegExp('(?:^|[^'+WORDCHAR+'])('+lenientPattern(w)+')(?=[^'+WORDCHAR+']|$)','g');
+        result = result.replace(re, (whole, grp) => whole.slice(0, whole.length-grp.length) + '<mark>'+grp+'</mark>');
+      });
+      return result;
+    }
+    if (mode === 'word' || mode === 'phrase') {
+      const re = new RegExp('(?:^|[^'+WORDCHAR+'])('+lenientPattern(clean)+')(?=[^'+WORDCHAR+']|$)','g');
+      return txt.replace(re, (whole, grp) => whole.slice(0, whole.length-grp.length) + '<mark>'+grp+'</mark>');
+    }
+    const re = new RegExp(lenientPattern(clean),'g');
+    return txt.replace(re, m=>`<mark>${m}</mark>`);
+  } catch(e) { return txt; }
+}
 function doSearch(q) {
   clearTimeout(_searchTimer);
   _searchTimer = setTimeout(() => _runSearch(q.trim()), 200);
@@ -1312,21 +1716,25 @@ function doSearch(q) {
 function _runSearch(q) {
   const resEl = document.getElementById('srch-results');
   const cntEl = document.getElementById('srch-count');
-  if (!q || q.length < 2) { resEl.innerHTML=''; cntEl.textContent=''; return; }
+  if (!q || stripDiac(q).trim().length < 2) { resEl.innerHTML=''; cntEl.textContent=''; return; }
+  const mode = _searchMode;
 
   const hits = [];
   B.forEach((book,bi)=>{
     const bt = book.title;
-    if (book.intro.includes(q)) {
-      hits.push({bi, bt, babi:-1, babt:'مقدمة الكتاب', snip:snippet(book.intro,q)});
-    }
+    const mIntro = findMatch(book.intro, q, mode);
+    if (mIntro) hits.push({bi, bt, babi:-1, babt:'مقدمة الكتاب', snip:snippetAt(book.intro, mIntro.index, mIntro.length)});
     book.babs.forEach((bab,babi)=>{
-      if (bab.title.includes(q)||bab.intro.includes(q)) {
-        hits.push({bi,bt,babi,babt:bab.title,snip:bab.title.includes(q)?bab.title:snippet(bab.intro,q)});
+      const mTitle = findMatch(bab.title, q, mode);
+      const mBabIntro = findMatch(bab.intro, q, mode);
+      if (mTitle || mBabIntro) {
+        hits.push({bi,bt,babi,babt:bab.title, snip: mTitle ? bab.title : snippetAt(bab.intro, mBabIntro.index, mBabIntro.length)});
       }
       bab.fasls.forEach(f=>{
-        if (f.title.includes(q)||f.content.includes(q)) {
-          hits.push({bi,bt,babi,babt:bab.title,snip:f.content.includes(q)?snippet(f.content,q):f.title});
+        const mFTitle = findMatch(f.title, q, mode);
+        const mFContent = findMatch(f.content, q, mode);
+        if (mFTitle || mFContent) {
+          hits.push({bi,bt,babi,babt:bab.title, snip: mFContent ? snippetAt(f.content, mFContent.index, mFContent.length) : f.title});
         }
       });
     });
@@ -1339,7 +1747,7 @@ function _runSearch(q) {
         <div class="sr-item" onclick="gotoHit(${h.bi},${h.babi})">
           <div class="sr-book">${h.bt}</div>
           <div class="sr-bab">${h.babt}</div>
-          <div class="sr-txt">${hl(h.snip,q)}</div>
+          <div class="sr-txt">${hlLenient(h.snip,q,mode)}</div>
         </div>`).join('');
 }
 function gotoHit(bi,babi) {
@@ -1347,14 +1755,9 @@ function gotoHit(bi,babi) {
   if (S.book!==bi) renderBook(bi, ()=>{ if(babi>=0) setTimeout(()=>scrollToBab(babi),350); });
   else if (babi>=0) scrollToBab(babi);
 }
-function snippet(txt,q,ctx=70) {
-  const i = txt.indexOf(q);
-  if (i<0) return txt.slice(0,140)+'…';
-  const s = Math.max(0,i-ctx), e = Math.min(txt.length,i+q.length+ctx);
+function snippetAt(txt,idx,len,ctx=70) {
+  const s = Math.max(0,idx-ctx), e = Math.min(txt.length,idx+len+ctx);
   return (s>0?'…':'')+txt.slice(s,e)+(e<txt.length?'…':'');
-}
-function hl(txt,q) {
-  return txt.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'),`<mark>${q}</mark>`);
 }
 
 // ╔═══════════════════════════════════════════╗
@@ -1437,6 +1840,9 @@ function toggleSidebar() {
   S.sidebarOpen = !S.sidebarOpen;
   document.getElementById('sidebar').classList.toggle('closed',!S.sidebarOpen);
   document.getElementById('main').classList.toggle('no-sidebar',!S.sidebarOpen);
+  if (window.innerWidth < 800) {
+    document.getElementById('sb-overlay').classList.toggle('show', S.sidebarOpen);
+  }
 }
 function toggleReading() {
   S.readingMode = !S.readingMode;
@@ -1471,14 +1877,38 @@ let _selTimer;
 function onSel() {
   clearTimeout(_selTimer);
   _selTimer = setTimeout(()=>{
-    const sel = window.getSelection().toString().trim();
     const bar = document.getElementById('sel-bar');
-    if (sel.length>3) {
-      const r = window.getSelection().getRangeAt(0).getBoundingClientRect();
-      bar.style.top = (r.top+window.scrollY-46)+'px';
-      bar.style.right = (window.innerWidth-r.right)+'px';
-      bar.classList.add('show');
-    } else bar.classList.remove('show');
+    try {
+      const selection = window.getSelection();
+      const sel = selection ? selection.toString().trim() : '';
+      if (sel.length>3 && selection.rangeCount>0) {
+        const r = selection.getRangeAt(0).getBoundingClientRect();
+        if (!r || (r.width===0 && r.height===0)) { bar.classList.remove('show'); return; }
+        const GAP = 64; // مسافة أكبر عن النص المظلل لتجنّب تعارض قائمة المتصفح الأصلية
+        const barH = 44;
+        const spaceAbove = r.top;
+        const spaceBelow = window.innerHeight - r.bottom;
+        let top;
+        if (spaceAbove > (GAP+barH)) {
+          // فوق النص، بمسافة كافية
+          top = r.top + window.scrollY - GAP;
+        } else if (spaceBelow > (GAP+barH)) {
+          // لا مساحة كافية فوق -> أسفل النص
+          top = r.bottom + window.scrollY + GAP - barH;
+        } else {
+          // مساحة ضيقة من الجهتين -> أبعد ما يمكن ضمن الشاشة
+          top = r.bottom + window.scrollY + 14;
+        }
+        bar.style.top = top+'px';
+        bar.style.right = Math.max(8, window.innerWidth-r.right)+'px';
+        bar.classList.add('show');
+      } else {
+        bar.classList.remove('show');
+      }
+    } catch(err) {
+      console.error('onSel error:', err);
+      if (bar) bar.classList.remove('show');
+    }
   },150);
 }
 function doSelCopy() {
@@ -1567,6 +1997,209 @@ function approxWords() {
 }
 function loadLS(k,def) { try{const v=localStorage.getItem(k);return v!=null?JSON.parse(v):def;}catch{return def;} }
 function saveLS(k,v) { try{localStorage.setItem(k,JSON.stringify(v));}catch{} }
+
+// ╔═══════════════════════════════════════════╗
+// ║             CARD EXPORT (بطاقة)          ║
+// ╚═══════════════════════════════════════════╝
+let _lastSelText = '';
+function openCardExport() {
+  const sel = window.getSelection().toString().trim();
+  _lastSelText = sel || _lastSelText;
+  if (!_lastSelText) { toast('✏️','ظلّل نصاً أولاً'); return; }
+
+  // Header: fixed work title + author (لا تتغيّر باختلاف الكتاب المعروض)
+  document.getElementById('cp-book-title').textContent = 'إتمام المطالب بتكميل دليل الطالب';
+  document.getElementById('cp-book-author').textContent = 'تأليف: كُلَيب بن أحمد بن ضيف الله الزهراني';
+
+  // Source line: الكتاب + الباب الذي أُخذت منه الفقرة المظلَّلة
+  let src = '';
+  if (S.book!=null && B[S.book]) {
+    src = B[S.book].title;
+    if (S.bab!=null && B[S.book].babs && B[S.book].babs[S.bab]) {
+      src += '  —  ' + B[S.book].babs[S.bab].title;
+    }
+  }
+  document.getElementById('cp-source').textContent = src;
+
+  document.getElementById('card-body').innerText = _lastSelText;
+
+  // اليوم + التاريخ الهجري + الميلادي + الوقت، في زاوية البطاقة
+  const now = new Date();
+  const weekday = now.toLocaleDateString('ar', {weekday:'long'});
+  const gregStr = now.toLocaleDateString('ar', {day:'numeric',month:'long',year:'numeric'});
+  const timeStr = now.toLocaleTimeString('ar', {hour:'2-digit',minute:'2-digit'});
+  let hijriStr = '';
+  try {
+    hijriStr = now.toLocaleDateString('ar-SA-u-ca-islamic-umalqura', {day:'numeric',month:'long',year:'numeric'});
+  } catch(e) {
+    try { hijriStr = now.toLocaleDateString('ar-SA-u-ca-islamic', {day:'numeric',month:'long',year:'numeric'}); }
+    catch(e2) { hijriStr = ''; }
+  }
+  // بعض المتصفحات تُرجع التاريخ الهجري وبه "هـ" في آخره أصلاً، فنزيلها هنا
+  // لضمان عدم تكرارها مع الـ"هـ" التي نضيفها يدوياً بعد قليل.
+  hijriStr = hijriStr.replace(/\s*هـ\.?\s*$/,'').trim();
+  const dtEl = document.getElementById('cp-datetime');
+  dtEl.innerHTML = `${weekday}  •  ${timeStr}<br>${hijriStr ? hijriStr + 'هـ — ' : ''}${gregStr}م`;
+  const dtToggle = document.getElementById('cp-date-toggle');
+  toggleCardDate(dtToggle ? dtToggle.checked : true);
+
+  document.getElementById('sel-bar').classList.remove('show');
+  document.getElementById('card-ov').classList.add('open');
+}
+function closeCardExport() { document.getElementById('card-ov').classList.remove('open'); }
+
+function setCardFrame(cls) {
+  const el = document.getElementById('card-preview');
+  el.classList.remove('frame-none','frame-simple','frame-gold','frame-classic','frame-dashed');
+  el.classList.add(cls);
+}
+function setCardBg(bg) { document.getElementById('card-preview').setAttribute('data-bg', bg); }
+function setCardFont(ff) { document.getElementById('card-preview').style.setProperty('--card-ff', ff); }
+function setCardColor(c) { document.getElementById('card-preview').style.setProperty('--card-fc', c); }
+function setCardSize(v) {
+  document.getElementById('card-preview').style.setProperty('--card-fs', v+'px');
+  document.getElementById('cp-fs-val').textContent = v;
+}
+function toggleCardDate(show) {
+  const dtEl = document.getElementById('cp-datetime');
+  if (dtEl) dtEl.style.display = show ? '' : 'none';
+}
+
+// أداة مساعدة: تُنفّذ أي وعد (promise) بمهلة زمنية قصوى، فإن تجاوزها تُرفض
+// بدلاً من ترك الواجهة معلّقة إلى الأبد.
+function _withTimeout(promise, ms, label) {
+  return new Promise((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error('timeout:' + label)), ms);
+    promise.then(
+      v => { clearTimeout(t); resolve(v); },
+      e => { clearTimeout(t); reject(e); }
+    );
+  });
+}
+
+async function _renderCardCanvas() {
+  if (typeof html2canvas === 'undefined') {
+    toast('⚠️','تعذّر تحميل أداة التصدير، تحقق من الاتصال بالإنترنت');
+    return null;
+  }
+  // انتظار تحميل الخطوط بمهلة أقصاها 4 ثوانٍ، حتى لا يتعلّق التصدير
+  // إن لم يكتمل تحميل أحد الخطوط لأي سبب (شبكة بطيئة، حجب، إلخ).
+  try {
+    if (document.fonts && document.fonts.ready) {
+      await _withTimeout(document.fonts.ready, 4000, 'fonts');
+    }
+  } catch(e) { /* نتابع حتى لو لم تكتمل الخطوط، بخط بديل */ }
+
+  const original = document.getElementById('card-preview');
+
+  // نسخ البطاقة إلى عنصر مستقل خارج الشاشة تماماً (بلا أي تمرير أو اقتصاص من
+  // النافذة المنبثقة) حتى يلتقط html2canvas الارتفاع الكامل للمحتوى دائماً،
+  // بصرف النظر عن موضع التمرير الحالي داخل نافذة المعاينة.
+  const cs = getComputedStyle(original);
+  const clone = original.cloneNode(true);
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'position:fixed;top:0;left:-99999px;z-index:-1;pointer-events:none;';
+  clone.style.width = cs.width;
+  clone.style.maxWidth = 'none';
+  wrap.appendChild(clone);
+  document.body.appendChild(wrap);
+
+  try {
+    const canvas = await _withTimeout(
+      html2canvas(clone, {
+        scale: 1.5,
+        backgroundColor: cs.backgroundColor || '#ffffff',
+        useCORS: false,
+        allowTaint: true,
+        logging: false,
+        removeContainer: true
+      }),
+      15000,
+      'render'
+    );
+    return canvas;
+  } catch(e) {
+    console.error('card export error:', e);
+    toast('⚠️','تعذّر إنشاء الصورة (استغرقت وقتاً طويلاً)، جرّب نصاً أقصر');
+    return null;
+  } finally {
+    wrap.remove();
+  }
+}
+
+let _cardBusy = false;
+async function downloadCard() {
+  if (_cardBusy) return;
+  _cardBusy = true;
+  const btn = document.querySelector('.card-act-btn.primary');
+  const shareBtn = document.getElementById('card-share-btn');
+  const oldLabel = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ جارٍ التجهيز...'; }
+  if (shareBtn) shareBtn.disabled = true;
+  toast('⏳','جارٍ تجهيز الصورة...');
+  try {
+    const canvas = await _renderCardCanvas();
+    if (!canvas) return;
+    const a = document.createElement('a');
+    a.download = 'بطاقة-اقتباس.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+    toast('✅','تم تنزيل البطاقة');
+  } finally {
+    _cardBusy = false;
+    if (btn) { btn.disabled = false; btn.textContent = oldLabel || '⬇️ تنزيل الصورة'; }
+    if (shareBtn) shareBtn.disabled = false;
+  }
+}
+async function shareCard() {
+  if (_cardBusy) return;
+  _cardBusy = true;
+  const btn = document.getElementById('card-share-btn');
+  const dlBtn = document.querySelector('.card-act-btn.primary');
+  const oldLabel = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ جارٍ التجهيز...'; }
+  if (dlBtn) dlBtn.disabled = true;
+  try {
+    const canvas = await _renderCardCanvas();
+    if (!canvas) return;
+    await new Promise((resolveBlob) => {
+      canvas.toBlob(async (blob) => {
+        if (!blob) { toast('⚠️','تعذّر إنشاء الصورة'); resolveBlob(); return; }
+        const file = new File([blob], 'بطاقة-اقتباس.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({ files: [file], title: 'اقتباس من متن إتمام المطالب' });
+          } catch(e) { /* ألغى المستخدم المشاركة */ }
+        } else {
+          toast('ℹ️','المشاركة المباشرة غير مدعومة هنا، سيتم تنزيل الصورة');
+          const a = document.createElement('a');
+          a.download = 'بطاقة-اقتباس.png';
+          a.href = canvas.toDataURL('image/png');
+          a.click();
+        }
+        resolveBlob();
+      }, 'image/png');
+    });
+  } finally {
+    _cardBusy = false;
+    if (btn) { btn.disabled = false; btn.textContent = oldLabel || '📤 مشاركة مباشرة'; }
+    if (dlBtn) dlBtn.disabled = false;
+  }
+}
+
+// ╔═══════════════════════════════════════════╗
+// ║           SHARE FAB / INSTRUCTIONS       ║
+// ╚═══════════════════════════════════════════╝
+function toggleSharePop(e) {
+  e.stopPropagation();
+  document.getElementById('share-fab-wrap').classList.toggle('open');
+}
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('share-fab-wrap');
+  if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+    wrap.classList.remove('open');
+  }
+});
 </script>
 </body>
 </html>
