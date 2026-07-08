@@ -70,7 +70,17 @@
    RESET
 ═══════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+  overflow-x:hidden;
+  /* حاسم لعناصر position:fixed المُزاحة خارج الشاشة (كالقائمة الجانبية
+     المغلقة): بدون هذا، تبقى تلك العناصر ضمن حساب عرض المستند الفعلي
+     رغم كونها مخفية بصرياً، مما يجبر متصفحات الجوال على تصغير الصفحة
+     بالكامل لتناسب عرضاً أوسع من الشاشة الحقيقية — وهذا يُزيح كل نقاط
+     اللمس عن مواضعها الظاهرة فعلياً (ويُفسّر تعطّل القائمة الجانبية
+     وأزرار القارئ الآلي وغيرها على الجوال تحديداً).
+  */
+}
 body{
   font-family:var(--font);
   background:var(--c-bg);
@@ -682,11 +692,11 @@ button,input,select{font-family:inherit}
    BACK TO TOP
 ═══════════════════════════════════════════════ */
 #btt{
-  position:fixed;bottom:28px;left:28px;
-  width:42px;height:42px;border-radius:50%;
+  position:fixed;bottom:20px;left:20px;
+  width:44px;height:44px;border-radius:50%;
   background:var(--c-accent);color:#fff;border:none;cursor:pointer;
-  font-size:18px;display:none;align-items:center;justify-content:center;
-  box-shadow:0 4px 18px rgba(140,28,28,.45);
+  font-size:17px;display:none;align-items:center;justify-content:center;
+  box-shadow:0 4px 14px rgba(140,28,28,.4);
   transition:all .18s;z-index:90;line-height:1;
 }
 #btt.show{display:flex}
@@ -887,26 +897,22 @@ button,input,select{font-family:inherit}
    SHARE FAB + POPOVER
 ═══════════════════════════════════════════════ */
 #share-fab-wrap{
-  position:fixed;bottom:82px;left:28px;z-index:95;
+  position:fixed;bottom:84px;left:20px;z-index:95;
 }
 #share-fab{
-  display:flex;align-items:center;gap:8px;
-  background:var(--c-accent);color:#fff;border:none;
-  padding:11px 16px 11px 14px;border-radius:30px;cursor:pointer;
-  box-shadow:0 4px 18px rgba(140,28,28,.45);
-  font-family:var(--font);font-size:13.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--c-accent);color:#fff;border:none;cursor:pointer;
+  box-shadow:0 4px 14px rgba(140,28,28,.4);
+  font-size:18px;
   transition:all .18s;
 }
 #share-fab:hover{background:var(--c-accent2);transform:translateY(-3px)}
-#share-fab .sf-ic{font-size:17px}
-@media(max-width:800px){
-  #share-fab .sf-txt{display:none}
-  #share-fab{padding:12px;border-radius:50%}
-}
+#share-fab .sf-txt{display:none}
 
 #share-pop{
-  position:absolute;bottom:calc(100% + 12px);left:0;
-  width:290px;max-width:80vw;
+  position:absolute;bottom:calc(100% + 10px);left:0;
+  width:270px;max-width:78vw;
   background:var(--c-surface);border:1px solid var(--c-border);
   border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.28);
   padding:14px 16px 16px;
@@ -940,25 +946,21 @@ button,input,select{font-family:inherit}
    ICONS GUIDE FAB (دليل الأيقونات) — فوق كرة المشاركة
 ═══════════════════════════════════════════════ */
 #guide-fab-wrap{
-  position:fixed;bottom:136px;left:28px;z-index:95;
+  position:fixed;bottom:148px;left:20px;z-index:95;
 }
 #guide-fab{
-  display:flex;align-items:center;gap:8px;
+  display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:50%;
   background:var(--c-surface);color:var(--c-accent);border:1.5px solid var(--c-accent);
-  padding:11px 16px 11px 14px;border-radius:30px;cursor:pointer;
-  box-shadow:0 4px 16px rgba(0,0,0,.22);
-  font-family:var(--font);font-size:13.5px;font-weight:700;
+  cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.2);
+  font-size:18px;
   transition:all .18s;
 }
 #guide-fab:hover{background:var(--c-accent);color:#fff;transform:translateY(-3px)}
-#guide-fab .sf-ic{font-size:17px}
-@media(max-width:800px){
-  #guide-fab .sf-txt{display:none}
-  #guide-fab{padding:12px;border-radius:50%}
-}
+#guide-fab .sf-txt{display:none}
 #guide-pop{
-  position:absolute;bottom:calc(100% + 12px);left:0;
-  width:360px;max-width:88vw;max-height:72vh;overflow-y:auto;
+  position:absolute;bottom:calc(100% + 10px);left:0;
+  width:340px;max-width:86vw;max-height:68vh;overflow-y:auto;
   background:var(--c-surface);border:1px solid var(--c-border);
   border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.3);
   padding:14px 16px 16px;
@@ -987,23 +989,19 @@ button,input,select{font-family:inherit}
    READER (TTS) FAB + POPOVER
 ═══════════════════════════════════════════════ */
 #reader-fab-wrap{
-  position:fixed;bottom:82px;right:28px;z-index:250;
+  position:fixed;bottom:84px;right:20px;z-index:250;
 }
 #reader-fab{
-  display:flex;align-items:center;gap:8px;
-  background:var(--c-accent);color:#fff;border:none;
-  padding:11px 14px 11px 16px;border-radius:30px;cursor:pointer;
-  box-shadow:0 4px 18px rgba(140,28,28,.45);
-  font-family:var(--font);font-size:13.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--c-accent);color:#fff;border:none;cursor:pointer;
+  box-shadow:0 4px 14px rgba(140,28,28,.4);
+  font-size:18px;
   transition:all .18s;
 }
 #reader-fab:hover{background:var(--c-accent2);transform:translateY(-3px)}
 #reader-fab.speaking{animation:pulse 1.4s ease-in-out infinite}
-#reader-fab .sf-ic{font-size:17px}
-@media(max-width:800px){
-  #reader-fab .sf-txt{display:none}
-  #reader-fab{padding:12px;border-radius:50%}
-}
+#reader-fab .sf-txt{display:none}
 #reader-pop{
   position:absolute;bottom:calc(100% + 12px);right:0;
   width:280px;max-width:80vw;
@@ -1045,14 +1043,14 @@ button,input,select{font-family:inherit}
    READER HELP FAB (تعليمات القارئ الآلي) — نافذة منبثقة
 ═══════════════════════════════════════════════ */
 #reader-help-fab-wrap{
-  position:fixed;bottom:28px;right:28px;z-index:250;
+  position:fixed;bottom:20px;right:20px;z-index:250;
 }
 #reader-help-fab{
-  width:42px;height:42px;border-radius:50%;
+  width:44px;height:44px;border-radius:50%;
   background:var(--c-surface);color:var(--c-accent);border:1.5px solid var(--c-accent);
-  cursor:pointer;font-size:17px;font-weight:800;
+  cursor:pointer;font-size:16px;font-weight:800;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 16px rgba(0,0,0,.25);
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
   transition:all .18s;
 }
 #reader-help-fab:hover{background:var(--c-accent);color:#fff;transform:translateY(-3px)}
@@ -1199,6 +1197,14 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
   touch-action:manipulation;
   -webkit-tap-highlight-color:transparent;
 }
+/* دعم القراءة الصوتية على متصفحات الجوال غير مستقر بدرجة كافية (اختلاف
+   سلوك pause/resume على أندرويد، وقفل الصوت عبر مفتاح الصامت على آيفون)،
+   فنقتصر بميزة القارئ الآلي على الحاسوب حيث الدعم أثبت، تفادياً لتجربة
+   مربكة أو صامتة على الجوال. */
+@media(max-width:800px){
+  #reader-fab-wrap, #reader-help-fab-wrap{display:none!important}
+  #sel-bar .sb-btn[data-desktop-only]{display:none!important}
+}
 </style>
 </head>
 <body data-fs="md" data-font="sch">
@@ -1219,7 +1225,7 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
   <button class="sb-btn" onmousedown="event.preventDefault()" onclick="doSelCopy()" aria-label="نسخ النص المُظلَّل">📋 نسخ</button>
   <button class="sb-btn" onmousedown="event.preventDefault()" onclick="doSelSearch()" aria-label="بحث عن النص المُظلَّل">🔍 بحث</button>
   <button class="sb-btn" onmousedown="event.preventDefault()" onclick="openCardExport()" aria-label="تصدير النص المُظلَّل كبطاقة صورة">🖼️ تصدير بطاقة</button>
-  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="doSelRead()" aria-label="قراءة النص المُظلَّل صوتياً">🔊 قراءة</button>
+  <button class="sb-btn" data-desktop-only onmousedown="event.preventDefault()" onclick="doSelRead()" aria-label="قراءة النص المُظلَّل صوتياً">🔊 قراءة</button>
   <button class="sb-btn" onmousedown="event.preventDefault()" onclick="openMemo()" aria-label="مراجعة حفظ النص المُظلَّل">🎯 مراجعة</button>
 </div>
 
@@ -1268,7 +1274,7 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
           <div class="sp-title" id="a11y-pop-title">♿ إمكانية الوصول</div>
           <div class="sp-list">
             <div class="sp-item"><span class="sp-num">♿</span><span>هذا الموقع مصمَّم ليكون متاحاً للمكفوفين وضعاف البصر ومستخدمي لوحة المفاتيح وقارئات الشاشة، ومتوافق كاملاً مع جميع أنواع الجوالات.</span></div>
-            <div class="sp-item"><span class="sp-num">١</span><span><b>القراءة الصوتية:</b> استخدم <b>🔊 القارئ الآلي</b> لتحويل أي كتاب أو نص مُظلَّل إلى صوت مسموع كامل.</span></div>
+            <div class="sp-item"><span class="sp-num">١</span><span><b>القراءة الصوتية:</b> استخدم <b>🔊 القارئ الآلي</b> (متاح على الحاسوب حالياً) لتحويل أي كتاب أو نص مُظلَّل إلى صوت مسموع كامل. على الجوال، يمكن استخدام ميزة قراءة الشاشة المدمجة في جهازك (VoiceOver / TalkBack) بديلاً موثوقاً.</span></div>
             <div class="sp-item"><span class="sp-num">٢</span><span><b>لوحة المفاتيح:</b> كل الأزرار تعمل بمفتاح Tab ثم Enter، ورابط "تخطَّ إلى المحتوى" يظهر أول ضغطة Tab لتجاوز القوائم مباشرة.</span></div>
             <div class="sp-item"><span class="sp-num">٣</span><span><b>قارئات الشاشة:</b> كل الأزرار الرمزية تحمل تسميات نصية واضحة (aria-label)، وتُعلن رسائل الحالة تلقائياً.</span></div>
             <div class="sp-item"><span class="sp-num">٤</span><span><b>تكبير النص:</b> يمكنك التكبير من إعدادات متصفحك (Ctrl/⌘ و+/-)، أو من قائمة ⚙️ الإعدادات داخل الموقع.</span></div>
@@ -1642,7 +1648,9 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
       <label class="card-opt-lbl">الصوت</label>
       <select id="reader-voice-sel" onchange="readerSetVoice(this.value)"><option>جارٍ التحميل…</option></select>
     </div>
+    <button class="card-act-btn secondary" style="width:100%;margin-top:2px" onclick="readerTestSound()">🔈 اختبار الصوت</button>
     <div class="reader-warn" id="reader-warn" style="display:none">⚠️ لم يُعثر على صوت عربي في متصفحك، فقد يكون النطق بلكنة غير عربية. للحصول على أفضل نطق عربي جرّب متصفح Chrome على جهاز حديث.</div>
+    <div class="reader-warn">📱 <b>لا يوجد صوت على آيفون؟</b> تأكد أن مفتاح الصامت الجانبي (الكتم) على وضع التشغيل الصوتي، وأن مستوى صوت الوسائط مرتفع — لا يكفي رفع صوت الرنين وحده.</div>
   </div>
 </div>
 
@@ -1652,6 +1660,7 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
   <div id="reader-help-pop" onclick="event.stopPropagation()" role="dialog" aria-labelledby="reader-help-title">
     <div class="sp-title" id="reader-help-title">🔊 دليل استخدام القارئ الآلي</div>
     <div class="sp-list">
+      <div class="sp-item"><span class="sp-num">💻</span><span><b>متاح على الحاسوب حالياً:</b> دعم القراءة الصوتية على متصفحات الجوال غير مستقر بما يكفي بعد، فاقتصرت الميزة على الحاسوب لضمان تجربة موثوقة.</span></div>
       <div class="sp-item"><span class="sp-num">١</span><span><b>ما هو؟</b> يحوّل نص الكتاب إلى صوت مسموع داخل متصفحك مباشرة، بلا حاجة لأي تطبيق إضافي.</span></div>
       <div class="sp-item"><span class="sp-num">٢</span><span><b>قراءة كتاب كامل:</b> افتح كتاباً، اضغط كرة <b>🔊 قارئ آلي</b>، ثم <b>▶️ تشغيل</b>. سيقرأ الكتاب باباً وفصلاً، مع تظليل والانتقال التلقائي لموضع القراءة.</span></div>
       <div class="sp-item"><span class="sp-num">٣</span><span><b>قراءة نص محدد فقط:</b> ظلّل أي فقرة، ثم اضغط زر <b>🔊 قراءة</b> من الشريط الذي يظهر فوقها.</span></div>
@@ -1664,7 +1673,7 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
 </div>
 
 <!-- BACK TO TOP -->
-<button id="btt" onclick="scrollTop()" aria-label="العودة إلى أعلى الصفحة">↑</button>
+<button id="btt" onclick="scrollToTop()" aria-label="العودة إلى أعلى الصفحة">↑</button>
 
 <!-- TOAST -->
 <div id="toast" role="status" aria-live="polite"><span id="toast-icon"></span><span id="toast-txt"></span></div>
@@ -1859,7 +1868,7 @@ function renderHome() {
       </div>
     </div>
   `;
-  scrollTop(false);
+  scrollToTop(false);
 }
 
 // ╔═══════════════════════════════════════════╗
@@ -1942,7 +1951,7 @@ function renderBook(bi, cb) {
       </div>
     </div>`;
 
-  scrollTop(false);
+  scrollToTop(false);
   if (cb) setTimeout(cb, 100);
 }
 
@@ -1990,7 +1999,7 @@ function scrollToBab(babi) {
   }, 260);
 }
 
-function scrollTop(smooth=true) {
+function scrollToTop(smooth=true) {
   window.scrollTo({top:0,behavior:smooth?'smooth':'auto'});
 }
 
@@ -2278,7 +2287,7 @@ function onSel() {
         _lastSelText = sel;
         const r = selection.getRangeAt(0).getBoundingClientRect();
         if (!r || (r.width===0 && r.height===0)) { bar.classList.remove('show'); return; }
-        const GAP = 64; // مسافة أكبر عن النص المظلل لتجنّب تعارض قائمة المتصفح الأصلية
+        const GAP = 86; // مسافة أكبر عن النص المظلل لتجنّب تعارض قائمة المتصفح الأصلية
         const barH = 44;
         const spaceAbove = r.top;
         const spaceBelow = window.innerHeight - r.bottom;
@@ -2287,15 +2296,20 @@ function onSel() {
         // (viewport) فقط، دون إضافة window.scrollY (فذلك خاص بالعناصر
         // position:absolute/static) — وإلا يظهر الشريط خارج الشاشة كلما مرّرنا
         // للأسفل، وهو تحديداً ما كان يمنع ظهوره داخل الأبواب والفصول.
-        if (spaceAbove > (GAP+barH)) {
-          // فوق النص، بمسافة كافية
-          top = r.top - GAP;
-        } else if (spaceBelow > (GAP+barH)) {
-          // لا مساحة كافية فوق -> أسفل النص
+        //
+        // نُفضّل الظهور أسفل النص المُظلَّل أولاً (لا أعلاه) لأن قائمة
+        // المتصفح/النظام الأصلية (نسخ/مشاركة/بحث) تظهر في الغالب الساحق فوق
+        // التحديد مباشرة على كل من آيفون وأندرويد، فوضع شريطنا أسفله يقلّل
+        // احتمال التعارض معها إلى أدنى حد.
+        if (spaceBelow > (GAP+barH)) {
+          // أسفل النص، بمسافة كافية (الخيار المفضَّل)
           top = r.bottom + GAP - barH;
+        } else if (spaceAbove > (GAP+barH)) {
+          // لا مساحة كافية أسفل -> أعلى النص
+          top = r.top - GAP;
         } else {
           // مساحة ضيقة من الجهتين -> أبعد ما يمكن ضمن الشاشة
-          top = r.bottom + 14;
+          top = window.innerHeight - barH - 8;
         }
         // تحصين إضافي: تأكد أن الشريط يبقى دوماً داخل حدود الشاشة المرئية
         top = Math.max(8, Math.min(top, window.innerHeight - barH - 8));
@@ -2655,10 +2669,15 @@ let _reader = {
   bookIdx: null,
   repeatCount: 1,   // كم مرة يُعاد نطق كل مقطع (للحفظ)
   repeatLeft: 1,    // كم مرة متبقية للمقطع الحالي
+  currentUtterance: null, // مرجع دائم يمنع حذف كائن النطق قبل اكتماله (خصوصاً على الجوال)
+  fastFinishCount: 0,     // عدّاد المقاطع التي انتهت بسرعة مريبة (كاشف "لا صوت فعلي")
+  lastSpeakStartTime: 0,
 };
 
+function _isMobileViewport() { return window.innerWidth < 800; }
 function toggleReaderPop(e) {
   e.stopPropagation();
+  if (_isMobileViewport()) { toast('💻','القارئ الآلي متاح على الحاسوب حالياً فقط لعدم استقرار دعمه على الجوال'); return; }
   if (!_TTS) { toast('⚠️','متصفحك لا يدعم القراءة الصوتية'); return; }
   const wrap = document.getElementById('reader-fab-wrap');
   wrap.classList.toggle('open');
@@ -2805,8 +2824,30 @@ function readerSpeakCurrent(forceRestart) {
       const v = speechSynthesis.getVoices().find(vv=>vv.voiceURI===_reader.voiceURI);
       if (v) u.voice = v;
     }
+    // مشكلة معروفة في متصفحات الجوال (خصوصاً Safari على آيفون): إن لم يبقَ
+    // أي مرجع دائم لكائن SpeechSynthesisUtterance، قد يحذفه جامع القمامة
+    // قبل أن يبدأ النطق فعلياً، فيُطلَق حدث onend فوراً بلا أي صوت — وهذا
+    // بالضبط ما يُفسّر تقدّم المؤشر حتى 100% دون سماع شيء. نحفظه هنا في
+    // متغيّر ثابت (_reader.currentUtterance) لإبقائه حياً طوال مدة النطق.
+    _reader.currentUtterance = u;
+    _reader.lastSpeakStartTime = Date.now();
     u.onend = () => {
       if (!_reader.playing) return; // أُوقفت أثناء النطق
+      // كاشف "السباق الصامت": نص لا يُفترض أن يُنطق في أقل من ٤٠٠ جزء من
+      // الثانية، فإن تكرر انتهاء عدة مقاطع بهذه السرعة تباعاً فهذا دليل
+      // شبه مؤكَّد أن لا صوت حقيقياً يخرج فعلياً من الجهاز، فنوقف القراءة
+      // برسالة واضحة بدل تركها "تمرّ" صامتة عبر الكتاب كله حتى ١٠٠٪.
+      const elapsed = Date.now() - _reader.lastSpeakStartTime;
+      if (elapsed < 400 && item.text.length > 12) {
+        _reader.fastFinishCount = (_reader.fastFinishCount||0) + 1;
+      } else {
+        _reader.fastFinishCount = 0;
+      }
+      if (_reader.fastFinishCount >= 3) {
+        readerStop(true);
+        document.getElementById('reader-status').innerHTML = '⚠️ يبدو أن لا صوت حقيقياً يصدر من جهازك. جرّب زر "🔈 اختبار الصوت" أعلاه، وتحقّق من مستوى الصوت ومفتاح الصامت (على آيفون).';
+        return;
+      }
       if (_reader.repeatLeft > 1) {
         // كرّر نفس المقطع (للحفظ) قبل الانتقال للمقطع التالي
         _reader.repeatLeft--;
@@ -2840,13 +2881,63 @@ function readerSpeakCurrent(forceRestart) {
   }
 }
 
+// ملاحظة: أزلنا سابقاً هنا حلقة "إبقاء حيّ" كانت تستدعي pause()/resume()
+// دورياً أثناء القراءة (لعلاج علة توقف كروم بعد نطق طويل جداً)، لكن تبيّن
+// أن أغلب متصفحات أندرويد تُنفّذ pause() كإلغاء كامل (cancel) للنطق الجاري
+// لا كإيقاف مؤقت فعلي — فكانت هذه "الحلقة الاحترازية" تقطع الصوت فعلياً
+// كل 4.5 ثانية على أندرويد بدل حمايته! بما أننا أصلاً نقسّم النص إلى جمل
+// قصيرة (splitForSpeech) فلا حاجة لهذه الحلقة أساساً، فأزلناها كاملة.
+function _readerStartKeepAlive() {}
+function _readerStopKeepAlive() {}
+
+// ينتظر توفّر قائمة الأصوات فعلياً (لأغراض تشخيصية/تحذيرية فقط — لا تُستخدم
+// لتأخير أول استدعاء لـ speak()، لأن بعض المتصفحات كـ Safari على آيفون
+// تشترط استدعاء speak() مباشرة ومتزامناً داخل حدث لمس/نقر المستخدم نفسه؛
+// أي تأخير ولو بوعد (Promise) قد يُفقد ذلك السياق فيصمت الصوت تماماً).
+function _waitForVoices(timeoutMs=2500) {
+  return new Promise((resolve) => {
+    const v0 = speechSynthesis.getVoices();
+    if (v0 && v0.length) { resolve(v0); return; }
+    let done = false;
+    const finish = (voices) => {
+      if (done) return;
+      done = true;
+      speechSynthesis.onvoiceschanged = readerPopulateVoices;
+      resolve(voices);
+    };
+    speechSynthesis.onvoiceschanged = () => finish(speechSynthesis.getVoices());
+    setTimeout(() => finish(speechSynthesis.getVoices()), timeoutMs);
+  });
+}
+function readerTestSound() {
+  if (!_TTS) { toast('⚠️','متصفحك لا يدعم القراءة الصوتية'); return; }
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance('اختبار الصوت، هل تسمعني؟');
+    u.lang = 'ar-SA';
+    u.rate = 1;
+    if (_reader.voiceURI) {
+      const v = speechSynthesis.getVoices().find(vv=>vv.voiceURI===_reader.voiceURI);
+      if (v) u.voice = v;
+    }
+    _reader.currentUtterance = u; // منع حذفه قبل النطق (انظر ملاحظة GC أعلاه)
+    u.onerror = () => toast('⚠️','تعذّر تشغيل الصوت التجريبي');
+    speechSynthesis.speak(u);
+    try { speechSynthesis.resume(); } catch(e) {}
+    toast('🔈','شغّلت صوتاً تجريبياً — هل سمعته؟');
+  } catch(e) {
+    toast('⚠️','تعذّر تشغيل الصوت التجريبي');
+  }
+}
 function readerToggle() {
+  if (_isMobileViewport()) { toast('💻','القارئ الآلي متاح على الحاسوب حالياً فقط'); return; }
   if (!_TTS) { toast('⚠️','متصفحك لا يدعم القراءة الصوتية'); return; }
   if (_reader.playing) { readerPause(); return; }
   if (S.book == null) { toast('📖','افتح كتاباً أولاً'); return; }
   if (_reader.paused && _reader.queue.length) {
     _reader.playing = true; _reader.paused = false;
     readerSpeakCurrent();
+    _readerStartKeepAlive();
     return;
   }
   // بداية جديدة
@@ -2854,16 +2945,29 @@ function readerToggle() {
   if (!_reader.queue.length) { toast('⚠️','لا يوجد نص لقراءته في هذا الكتاب'); return; }
   _reader.idx = 0; _reader.playing = true; _reader.paused = false;
   _reader.repeatLeft = _reader.repeatCount;
+  _reader.fastFinishCount = 0;
+  // نستدعي النطق فوراً ومتزامناً هنا (لا داخل then/setTimeout) لأن Safari
+  // على آيفون يشترط أن يكون أول استدعاء لـ speak() ضمن نفس حدث لمس/نقر
+  // المستخدم مباشرة، وإلا يُنفَّذ الاستدعاء بصمت دون أي صوت.
   readerSpeakCurrent();
+  _readerStartKeepAlive();
+  // فحص توفر الأصوات يجري بالتوازي فقط لأغراض تحذيرية، دون تأخير النطق أعلاه
+  _waitForVoices().then((voices) => {
+    if (!voices || !voices.length) {
+      toast('⚠️','لم يُعثر على أي صوت متاح في جهازك. إن كنت على آيفون، تأكّد أن مفتاح الصامت (الكتم) الجانبي مُغلق، وأن مستوى الصوت مرتفع.');
+    }
+  });
 }
 function readerPause() {
   if (!_TTS) return;
   speechSynthesis.cancel();
+  _readerStopKeepAlive();
   _reader.playing = false; _reader.paused = true;
   readerUpdateStatus();
 }
 function readerStop(silent) {
   if (_TTS) speechSynthesis.cancel();
+  _readerStopKeepAlive();
   _reader.playing = false; _reader.paused = false; _reader.idx = -1; _reader.queue = [];
   _readerClearHighlight();
   readerUpdateStatus();
@@ -2907,15 +3011,24 @@ function readerSetVoice(uri) {
 // قراءة النص المُظلَّل فقط (من شريط التحديد)
 function doSelRead() {
   document.getElementById('sel-bar').classList.remove('show');
+  if (_isMobileViewport()) { toast('💻','القارئ الآلي متاح على الحاسوب حالياً فقط'); return; }
   if (!_TTS) { toast('⚠️','متصفحك لا يدعم القراءة الصوتية'); return; }
   const sel = (window.getSelection().toString().trim()) || _lastSelText;
   if (!sel) { toast('✏️','ظلّل نصاً أولاً'); return; }
   _reader.queue = splitForSpeech(sel).map(t => ({text:t, elId:null}));
   _reader.idx = 0; _reader.playing = true; _reader.paused = false;
   _reader.repeatLeft = _reader.repeatCount;
-  readerSpeakCurrent(true);
+  _reader.fastFinishCount = 0;
   document.getElementById('reader-fab-wrap').classList.add('open');
+  // نطق متزامن فوري (انظر التعليق في readerToggle حول سبب أهمية ذلك)
+  readerSpeakCurrent(true);
+  _readerStartKeepAlive();
   toast('🔊','جارٍ قراءة النص المُظلَّل');
+  _waitForVoices().then((voices) => {
+    if (!voices || !voices.length) {
+      toast('⚠️','لم يُعثر على أي صوت متاح في جهازك. إن كنت على آيفون، تحقّق من مفتاح الصامت.');
+    }
+  });
 }
 
 // ╔═══════════════════════════════════════════╗
