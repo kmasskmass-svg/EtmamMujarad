@@ -147,6 +147,14 @@ button,input,select{font-family:inherit}
 }
 #sb-search::placeholder{color:rgba(232,217,190,.32)}
 #sb-search:focus{border-color:var(--c-sgold)}
+#sb-mode-tabs{display:flex;gap:6px;margin-top:10px}
+.sb-mode-tab{
+  flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(212,168,32,.2);
+  color:rgba(232,217,190,.65);border-radius:20px;padding:6px 4px;
+  font-size:11px;cursor:pointer;font-family:var(--font);transition:all .15s;
+}
+.sb-mode-tab:hover{border-color:var(--c-sgold)}
+.sb-mode-tab.on{background:var(--c-accent);color:#fff;border-color:var(--c-accent)}
 
 /* Sidebar nav */
 #sb-nav{
@@ -894,6 +902,83 @@ button,input,select{font-family:inherit}
 }
 
 /* ═══════════════════════════════════════════════
+   MEMO CARDS (بطاقات الحفظ) — تبويبات سياقية بجانب المصدر
+═══════════════════════════════════════════════ */
+.mc-tab-wrap{margin:10px 0 18px}
+.mc-tab{
+  display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+  font-size:12.5px;font-weight:700;color:var(--c-accent);
+  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:20px;
+  padding:6px 14px;user-select:none;transition:all .15s;font-family:var(--font);
+}
+.mc-tab:hover,.mc-tab.on{background:var(--c-accent);color:#fff;border-color:var(--c-accent)}
+.mc-tab-icon{
+  flex-shrink:0;background:none;border:none;cursor:pointer;
+  font-size:14px;opacity:.55;padding:2px 4px;border-radius:5px;transition:all .15s;
+}
+.mc-tab-icon:hover,.mc-tab-icon.on{opacity:1;background:rgba(212,168,32,.15)}
+.mc-inline-body{display:none;padding:14px 0 6px}
+.mc-inline-body.open{display:block}
+.mc-note{
+  font-size:11px;color:#a15c00;background:rgba(212,168,32,.14);
+  border-radius:8px;padding:8px 10px;margin-bottom:12px;line-height:1.7;
+}
+.mc-settings{
+  display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-bottom:16px;
+  padding:10px 12px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:10px;
+}
+.mc-settings label{font-size:11px;color:var(--c-text3);display:flex;flex-direction:column;gap:3px;flex:1;min-width:110px}
+.mc-settings select{
+  background:var(--c-surface);border:1px solid var(--c-border);border-radius:7px;
+  padding:5px 8px;font-size:12px;color:var(--c-text);font-family:inherit;
+}
+.mc-reset-btn{
+  background:var(--c-surface);border:1px solid var(--c-border);border-radius:7px;
+  padding:6px 10px;font-size:11px;color:var(--c-text2);cursor:pointer;font-family:var(--font);
+}
+.mc-reset-btn:hover{border-color:var(--c-gold)}
+.mc-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;
+}
+.memo-card{
+  position:relative;padding:18px 16px 10px;
+  font-family:'Scheherazade New',serif;
+  background:#faf6ed;color:#2a1a08;
+  transition:box-shadow .15s;
+  min-height:110px;display:flex;flex-direction:column;
+}
+.memo-card[data-bg=white]{background:#ffffff;color:#2a1a08}
+.memo-card[data-bg=dark]{background:#1b120a;color:#f1e7d5}
+.memo-card[data-bg=green]{background:#eef4ec;color:#20301f}
+.memo-card.frame-none{border:1px solid var(--c-border);border-radius:10px}
+.memo-card.frame-simple{border:2px solid var(--c-accent);border-radius:10px}
+.memo-card.frame-gold{border:3px double #a67c00;border-radius:6px;box-shadow:0 0 0 4px rgba(166,124,0,.08) inset}
+.memo-card.frame-dashed{border:2px dashed var(--c-text3);border-radius:8px}
+.memo-card.frame-classic{border:1px solid #a67c00;border-radius:4px}
+.memo-card.frame-classic::before,.memo-card.frame-classic::after{content:'❧';position:absolute;font-size:15px;color:#a67c00;opacity:.7}
+.memo-card.frame-classic::before{top:4px;right:8px}
+.memo-card.frame-classic::after{bottom:4px;left:8px;transform:rotate(180deg)}
+.mc-txt{font-size:16.5px;line-height:1.85;text-align:center;flex:1;cursor:pointer}
+.mc-txt:hover{opacity:.85}
+.mc-hint{font-size:10px;opacity:.55;margin-top:10px;text-align:center;font-family:var(--font);cursor:pointer}
+.mc-merge-row{display:flex;justify-content:space-between;gap:6px;margin-top:12px;padding-top:8px;border-top:1px solid rgba(140,28,28,.12)}
+.mc-merge-btn{
+  background:none;border:none;cursor:pointer;font-size:10px;opacity:.5;
+  font-family:var(--font);padding:2px 4px;transition:opacity .15s;
+}
+.mc-merge-btn:hover{opacity:1;text-decoration:underline}
+.mc-empty{font-size:12.5px;color:var(--c-text3);text-align:center;padding:20px}
+.mc-page-hint{font-size:12.5px;color:var(--c-text3);text-align:center;margin-top:8px;line-height:1.8}
+.mc-fasl-row{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  padding:12px 4px;border-bottom:1px dashed var(--c-border);
+}
+.mc-fasl-row:last-child{border-bottom:none}
+.mc-fasl-title{font-size:14px;font-weight:600;color:var(--c-text)}
+.mc-fasl-row .mc-tab-wrap{margin:0;flex-shrink:0}
+.mc-fasl-row .mc-inline-body{flex-basis:100%}
+
+/* ═══════════════════════════════════════════════
    SHARE FAB + POPOVER
 ═══════════════════════════════════════════════ */
 #share-fab-wrap{
@@ -1004,7 +1089,7 @@ button,input,select{font-family:inherit}
 #reader-fab .sf-txt{display:none}
 #reader-pop{
   position:absolute;bottom:calc(100% + 12px);right:0;
-  width:280px;max-width:80vw;
+  width:280px;max-width:80vw;max-height:78vh;overflow-y:auto;
   background:var(--c-surface);border:1px solid var(--c-border);
   border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.28);
   padding:14px 16px 16px;
@@ -1239,6 +1324,10 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
       <div class="sb-logo-text">متن إتمام المطالب<br><span style="color:rgba(232,217,190,.5);font-weight:400">فهرس الكتاب</span></div>
     </div>
     <input id="sb-search" type="text" placeholder="بحث في الفهرس..." oninput="filterSidebar(this.value)">
+    <div id="sb-mode-tabs">
+      <button class="sb-mode-tab on" id="sb-tab-index" onclick="setSidebarMode('index')">📖 الفهرس</button>
+      <button class="sb-mode-tab" id="sb-tab-memo" onclick="setSidebarMode('memo')">🗂️ بطاقات الحفظ</button>
+    </div>
   </div>
   <div id="sb-nav"></div>
   <div id="sb-footer">
@@ -1549,6 +1638,14 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
     <div class="guide-item"><div class="guide-icon">🔖</div><div class="guide-txt"><b>علامة الباب المرجعية:</b> زر صغير بجانب كل باب لوضع/إزالة علامة مرجعية عليه، يتحول لونه عند التفعيل ليدل على أنه محفوظ في نافذة "العلامات".</div></div>
     <div class="guide-item"><div class="guide-icon">▾</div><div class="guide-txt"><b>سهم طيّ الفصل:</b> كل فصل داخل الباب له عنوان صغير مع نقطة ● وسهم، اضغط عليه لطيّ أو نشر نص ذلك الفصل تحديداً بشكل مستقل عن بقية فصول الباب.</div></div>
 
+    <div class="guide-section-title">🗂️ بطاقات الحفظ (فهرس مستقل تماماً)</div>
+    <div class="guide-item"><div class="guide-icon">🗂️</div><div class="guide-txt"><b>ما هي؟</b> صفحة منفصلة تماماً عن نص المتن، لها فهرسها الخاص بنفس ترتيب الفهرس الرئيسي (الكتب ثم الأبواب). تجدها بالضغط على تبويب "🗂️ بطاقات الحفظ" أعلى القائمة الجانبية، بجانب تبويب "📖 الفهرس" العادي.</div></div>
+    <div class="guide-item"><div class="guide-icon">📑</div><div class="guide-txt"><b>كيف تتصفّحها؟</b> اختر كتاباً من الفهرس فتنتقل لصفحته الخاصة ببطاقات الحفظ، حيث يظهر بجانب كل مقدمة أو فصل زر "🗂️ بطاقات الحفظ" — اضغطه لتقسيم ذلك الجزء تلقائياً إلى بطاقات صغيرة مزخرفة (مسألة إلى ثلاث حسب إعدادك)، بلا أي نص أصلي معروض معها.</div></div>
+    <div class="guide-item"><div class="guide-icon">⚠️</div><div class="guide-txt"><b>ملاحظة مهمة:</b> التقسيم آلي تقريبي بحدود الفقرات وعلامات الوقف في النص، وليس تحليلاً فقهياً دقيقاً لحدود كل مسألة — فقد تحتاج بعض البطاقات نظرة تأمّل إضافية منك، ولا تُغني عن الرجوع لأصل النص في الفهرس الرئيسي.</div></div>
+    <div class="guide-item"><div class="guide-icon">⚙️</div><div class="guide-txt"><b>الإعدادات:</b> من أعلى كل قسم تختار إطار البطاقات وخلفيتها وعدد المسائل بكل بطاقة — تُحفظ اختياراتك وتُطبَّق على كل الأقسام تلقائياً.</div></div>
+    <div class="guide-item"><div class="guide-icon">🔗</div><div class="guide-txt"><b>دمج بطاقتين يدوياً:</b> إن رأيت بطاقتين متجاورتين ينبغي أن تكونا واحدة، اضغط "⬅ دمج بالسابقة" أو "دمج باللاحقة ➡" أسفل أي بطاقة — يُحفظ دمجك ويبقى كما رتّبته في زياراتك القادمة، مع زر "🔄 إعادة الضبط التلقائي" إن أردت التراجع عن كل تعديلاتك لذلك القسم.</div></div>
+    <div class="guide-item"><div class="guide-icon">🎯</div><div class="guide-txt"><b>الضغط على أي بطاقة:</b> يفتح فوراً نافذة "مراجعة الحفظ" بنص تلك البطاقة مطموساً، لتُسمِّعها بصوتك أو بالكتابة مباشرة دون تظليل يدوي.</div></div>
+
     <div class="guide-section-title">✋ عند تظليل أي نص</div>
     <div class="guide-item"><div class="guide-icon">📋</div><div class="guide-txt"><b>نسخ:</b> ينسخ النص المظلَّل إلى الحافظة مباشرة لتلصقه في أي مكان آخر.</div></div>
     <div class="guide-item"><div class="guide-icon">🔍</div><div class="guide-txt"><b>بحث:</b> يفتح نافذة البحث المتقدم ويبحث تلقائياً عن نفس النص المظلَّل في كل الكتاب.</div></div>
@@ -1693,6 +1790,9 @@ let S = {
   bookmarks: loadLS('itm_bm', []),
   lastPos: loadLS('itm_pos', null),
   searchQ: '',
+  sidebarMode: 'index', // 'index' | 'memo'
+  memoBook: null,
+  memoBab: null,
 };
 
 // ╔═══════════════════════════════════════════╗
@@ -1740,6 +1840,7 @@ function buildSidebar(filter='') {
   const nav = document.getElementById('sb-nav');
   nav.innerHTML = '';
   const fl = filter.trim();
+  const isMemo = S.sidebarMode === 'memo';
 
   B.forEach((book, bi) => {
     const t = book.title;
@@ -1747,7 +1848,7 @@ function buildSidebar(filter='') {
     const matchBab = book.babs.some(bab => bab.title.includes(fl));
     if (fl && !matchBook && !matchBab) return;
 
-    const isActive = S.book === bi;
+    const isActive = isMemo ? S.memoBook === bi : S.book === bi;
     const hasBabs = book.babs.length > 0;
 
     const wrap = document.createElement('div');
@@ -1760,7 +1861,7 @@ function buildSidebar(filter='') {
       <span class="nav-book-label">${t}</span>
       ${hasBabs?'<span class="nav-chevron">▶</span>':''}
     `;
-    btn.onclick = () => navBook(bi, btn, babList);
+    btn.onclick = isMemo ? () => navBookMemo(bi, btn, babList) : () => navBook(bi, btn, babList);
     wrap.appendChild(btn);
 
     let babList = null;
@@ -1771,9 +1872,11 @@ function buildSidebar(filter='') {
       book.babs.forEach((bab, babi) => {
         if (fl && !matchBook && !bab.title.includes(fl)) return;
         const bb = document.createElement('button');
-        bb.className = `nav-bab-btn${S.bab===babi&&isActive?' active':''}`;
+        bb.className = `nav-bab-btn${(isMemo?S.memoBab:S.bab)===babi&&isActive?' active':''}`;
         bb.textContent = bab.title;
-        bb.onclick = (e) => { e.stopPropagation(); navBab(bi, babi); };
+        bb.onclick = isMemo
+          ? (e) => { e.stopPropagation(); navBabMemo(bi, babi); }
+          : (e) => { e.stopPropagation(); navBab(bi, babi); };
         babList.appendChild(bb);
       });
       wrap.appendChild(babList);
@@ -1781,6 +1884,18 @@ function buildSidebar(filter='') {
 
     nav.appendChild(wrap);
   });
+}
+
+function setSidebarMode(mode) {
+  S.sidebarMode = mode;
+  document.getElementById('sb-tab-index').classList.toggle('on', mode==='index');
+  document.getElementById('sb-tab-memo').classList.toggle('on', mode==='memo');
+  buildSidebar(document.getElementById('sb-search').value);
+  if (mode === 'memo' && S.memoBook == null) {
+    renderMemoCardsHome();
+  } else if (mode === 'index' && S.book == null) {
+    renderHome();
+  }
 }
 
 function filterSidebar(val) { buildSidebar(val); }
@@ -1804,6 +1919,100 @@ function navBab(bi, babi) {
   if (window.innerWidth < 800) closeSidebarMobile();
 }
 
+// ╔═══════════════════════════════════════════╗
+// ║   MEMO CARDS INDEX (فهرس بطاقات الحفظ)    ║
+// ╚═══════════════════════════════════════════╝
+function navBookMemo(bi, btn, babList) {
+  if (babList) {
+    babList.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+  renderMemoCardsBookView(bi);
+  if (window.innerWidth < 800) closeSidebarMobile();
+}
+
+function navBabMemo(bi, babi) {
+  if (S.memoBook !== bi) {
+    renderMemoCardsBookView(bi, () => setTimeout(() => scrollToMemoBab(babi), 300));
+  } else {
+    scrollToMemoBab(babi);
+  }
+  if (window.innerWidth < 800) closeSidebarMobile();
+}
+
+function scrollToMemoBab(babi) {
+  S.memoBab = babi;
+  const el = document.getElementById(`mcbab-${S.memoBook}-${babi}`);
+  if (!el) return;
+  el.classList.add('open');
+  setTimeout(() => {
+    el.scrollIntoView({behavior:'auto', block:'start'});
+    el.style.outline = '2px solid var(--c-gold2)';
+    setTimeout(() => el.style.outline = '', 1800);
+  }, 50);
+}
+
+function renderMemoCardsHome() {
+  S.memoBook = null; S.memoBab = null;
+  setHeader('🗂️ بطاقات الحفظ');
+  setBreadcrumb([{label:'🗂️ بطاقات الحفظ'}]);
+  document.getElementById('page').innerHTML = `
+    <div class="book-view">
+      <div class="bv-header">
+        <div class="bv-title">🗂️ بطاقات الحفظ</div>
+        <div class="bv-intro" style="text-align:center">اختر كتاباً من الفهرس الجانبي لاستعراض بطاقات حفظه، منفصلة تماماً عن نص المتن.</div>
+      </div>
+    </div>`;
+}
+
+function renderMemoCardsBookView(bi, cb) {
+  const book = B[bi];
+  if (!book) return;
+  S.memoBook = bi; S.memoBab = null;
+  setHeader('🗂️ ' + book.title);
+  setBreadcrumb([{label:'🗂️ بطاقات الحفظ', fn:'setSidebarMode(\'memo\')'}, {label: book.title}]);
+  buildSidebar(document.getElementById('sb-search').value);
+
+  let bodyHtml = _mcTabHtml(bi+'-intro');
+
+  if (book.babs.length === 0) {
+    // كتاب بلا أبواب: مقدمته هي كل محتواه، وقد عُرضت أعلاه بالفعل
+  } else {
+    book.babs.forEach((bab, babi) => {
+      const isOpen = babi === 0 ? 'open' : '';
+      bodyHtml += `
+        <div class="bab ${isOpen}" id="mcbab-${bi}-${babi}">
+          <div class="bab-head" onclick="toggleMemoBab(this)">
+            <div class="bab-num">${toAr(babi+1)}</div>
+            <div class="bab-t">${bab.title}</div>
+            <span class="bab-chev">▶</span>
+          </div>
+          <div class="bab-body">
+            ${bab.intro ? _mcTabHtml(bi+'-'+babi+'-intro') : ''}
+            ${bab.fasls.map((fasl,fi) => `
+              <div class="mc-fasl-row">
+                <span class="mc-fasl-title">◆ ${fasl.title}</span>
+                ${_mcTabHtml(bi+'-'+babi+'-'+fi)}
+              </div>`).join('')}
+          </div>
+        </div>`;
+    });
+  }
+
+  document.getElementById('page').innerHTML = `
+    <div class="book-view">
+      <div class="bv-header">
+        <div class="bv-title">🗂️ ${book.title}</div>
+        <div class="mc-page-hint">بطاقات حفظ منفصلة عن نص المتن — اضغط أي زر "🗂️ بطاقات الحفظ" أدناه لإظهار بطاقاتها.</div>
+      </div>
+      <div class="ornament" aria-hidden="true">⸻ ✦ ⸻</div>
+      ${bodyHtml}
+    </div>`;
+
+  window.scrollTo(0,0);
+  if (cb) cb();
+}
+
 function closeSidebarMobile() {
   S.sidebarOpen = false;
   document.getElementById('sidebar').classList.add('closed');
@@ -1817,10 +2026,12 @@ function closeSidebarMobile() {
 function renderHome() {
   if (typeof _reader !== 'undefined' && (_reader.playing || _reader.paused)) readerStop(true);
   S.book = null; S.bab = null;
+  if (S.sidebarMode !== 'index') { S.sidebarMode = 'index'; document.getElementById('sb-tab-index')?.classList.add('on'); document.getElementById('sb-tab-memo')?.classList.remove('on'); }
   savePos(null, null);
   setHeader('متن إتمام المطالب');
   setBreadcrumb([]);
   updateSidebarActive(-1);
+  buildSidebar(document.getElementById('sb-search')?.value || '');
 
   const totalBabs = B.reduce((s,b)=>s+b.babs.length,0);
   const totalFasls = B.reduce((s,b)=>s+b.babs.reduce((s2,bab)=>s2+bab.fasls.length,0),0);
@@ -1875,6 +2086,12 @@ function renderBook(bi, cb) {
   const book = B[bi];
   if (!book) return;
   if (typeof _reader !== 'undefined' && (_reader.playing || _reader.paused) && S.book !== bi) readerStop(true);
+  if (S.sidebarMode !== 'index') {
+    S.sidebarMode = 'index';
+    document.getElementById('sb-tab-index')?.classList.add('on');
+    document.getElementById('sb-tab-memo')?.classList.remove('on');
+    buildSidebar(document.getElementById('sb-search')?.value || '');
+  }
 
   S.book = bi; S.bab = null;
   savePos(bi, null);
@@ -1963,6 +2180,9 @@ function toggleBab(head, bi, babi) {
   if (bab.classList.contains('open')) {
     S.bab = babi; savePos(bi, babi);
   }
+}
+function toggleMemoBab(head) {
+  head.closest('.bab').classList.toggle('open');
 }
 function toggleFasl(head) {
   head.closest('.fasl').classList.toggle('open');
@@ -2243,6 +2463,17 @@ function toggleReading() {
 }
 
 function restorePrefs() {
+  // تنظيف لمرة واحدة: أي بطاقات حفظ مدمجة يدوياً محفوظة من قبل كانت قد
+  // تحتفظ برمز الفاصل القديم (﴿ ﴾) قبل استبداله بالفاصل الزخرفي الجديد.
+  try {
+    Object.keys(localStorage).filter(k => k.startsWith('mc_merged_')).forEach(k => {
+      const v = localStorage.getItem(k);
+      if (v && v.includes('﴿')) {
+        localStorage.setItem(k, v.replace(/\s*﴿ ﴾\s*/g, '  ◆  '));
+      }
+    });
+  } catch(e) {}
+
   const t = loadLS('itm_theme','default');
   if (t && t!=='default') {
     document.documentElement.setAttribute('data-theme',t);
@@ -2830,17 +3061,18 @@ function readerSpeakCurrent(forceRestart) {
     _reader.lastSpeakStartTime = Date.now();
     u.onend = () => {
       if (!_reader.playing) return; // أُوقفت أثناء النطق
-      // كاشف "السباق الصامت": نص لا يُفترض أن يُنطق في أقل من ٤٠٠ جزء من
-      // الثانية، فإن تكرر انتهاء عدة مقاطع بهذه السرعة تباعاً فهذا دليل
-      // شبه مؤكَّد أن لا صوت حقيقياً يخرج فعلياً من الجهاز، فنوقف القراءة
-      // برسالة واضحة بدل تركها "تمرّ" صامتة عبر الكتاب كله حتى ١٠٠٪.
+      // كاشف "السباق الصامت": نص حقيقي مسموع لا يمكن منطقياً أن يُنطق كاملاً
+      // خلال أقل من جزء بسيط من الثانية مهما بلغت سرعة القراءة، فإن تكرر
+      // هذا عدة مرات متتالية فهو دليل شبه مؤكَّد على عدم وجود صوت حقيقي.
+      // (رفعنا صرامة الشرط بعد ملاحظة أنه كان يوقف قراءات حقيقية سريعة
+      // خطأً؛ التحديد القديم كان يخلط بين "سريع" و"صامت فعلاً".)
       const elapsed = Date.now() - _reader.lastSpeakStartTime;
-      if (elapsed < 400 && item.text.length > 12) {
+      if (elapsed < 80 && item.text.length > 20) {
         _reader.fastFinishCount = (_reader.fastFinishCount||0) + 1;
       } else {
         _reader.fastFinishCount = 0;
       }
-      if (_reader.fastFinishCount >= 3) {
+      if (_reader.fastFinishCount >= 6) {
         readerStop(true);
         document.getElementById('reader-status').innerHTML = '⚠️ يبدو أن لا صوت حقيقياً يصدر من جهازك. جرّب زر "🔈 اختبار الصوت" أعلاه، وتحقّق من مستوى الصوت ومفتاح الصامت (على آيفون).';
         return;
@@ -3038,7 +3270,12 @@ function openMemo() {
   document.getElementById('sel-bar').classList.remove('show');
   const sel = (window.getSelection().toString().trim()) || _lastSelText;
   if (!sel) { toast('✏️','ظلّل نصاً أولاً'); return; }
-  _memo.words = sel.split(/\s+/).filter(Boolean);
+  startMemoWithText(sel);
+}
+// يبدأ جلسة مراجعة حفظ لأي نص مُعطى مباشرة (تُستخدم من التظليل، ومن بطاقات
+// الحفظ داخل كل باب)
+function startMemoWithText(text) {
+  _memo.words = text.split(/\s+/).filter(Boolean);
   renderMemoBlanks();
   document.getElementById('memo-result').textContent = '';
   document.getElementById('memo-type-input').value = '';
@@ -3164,6 +3401,184 @@ function updateMemoMicBtn() {
   if (!btn) return;
   btn.textContent = _memo.listening ? '⏹️ إيقاف الاستماع' : '🎙️ ابدأ التسميع بالصوت';
   btn.classList.toggle('listening', _memo.listening);
+}
+
+// ╔═══════════════════════════════════════════╗
+// ║           MEMO CARDS (بطاقات الحفظ)       ║
+// ╚═══════════════════════════════════════════╝
+const MC_MAX_CHARS = 190;   // هدف تقريبي لـ "٤ أسطر" (يختلف فعلياً حسب حجم الخط وعرض البطاقة)
+const MC_MIN_CHARS = 25;    // أقل طول مقبول لوحدة "مسألة" مستقلة قبل دمجها بما يليها
+const MC_SEP = '  ◆  ';   // فاصل زخرفي بين مسائل داخل نفس البطاقة
+
+let _mcSettings = {
+  frame: loadLS('mc_frame','frame-gold'),
+  bg: loadLS('mc_bg','parchment'),
+  maxItems: loadLS('mc_maxItems', 3),
+};
+let _mcCache = {}; // "مفتاح المصدر" -> [نص البطاقة١, نص البطاقة٢, ...]
+
+// زر/تبويب صغير يوضَع مباشرة بجانب مصدر النص (مقدمة كتاب/باب أو فصل)،
+// بدل تجميع كل البطاقات في قسم واحد منفصل في آخر الباب.
+function _mcTabHtml(key) {
+  return `<div class="mc-tab-wrap">
+    <button class="mc-tab" onclick="toggleMemoCardsInline('${key}',this)" aria-expanded="false">🗂️ بطاقات الحفظ</button>
+    <div class="mc-inline-body" id="mc-inline-${key}"></div>
+  </div>`;
+}
+
+// يقسّم نصاً واحداً إلى وحدات "مسألة" تقريبية: أولاً بالفقرات الطبيعية في
+// النص، ثم أي فقرة طويلة جداً تُقسَّم على علامات وقف داخلية لتقارب الحجم
+// المستهدف، وأي فقرة قصيرة جداً تُترك لتُدمج لاحقاً مع ما يليها عند التعبئة.
+function _mcSplitUnits(text) {
+  if (!text) return [];
+  const paras = text.trim().split(/\n{2,}/).map(p=>p.replace(/\n/g,' ').trim()).filter(Boolean);
+  const units = [];
+  paras.forEach(p => {
+    if (p.length <= MC_MAX_CHARS*1.3) { units.push(p); return; }
+    // فقرة طويلة: نقسّمها على نقاط وقف قريبة من الحجم المستهدف
+    let rest = p;
+    while (rest.length > MC_MAX_CHARS*1.3) {
+      const window_ = rest.slice(0, MC_MAX_CHARS+40);
+      let cut = Math.max(window_.lastIndexOf('. '), window_.lastIndexOf('؛ '), window_.lastIndexOf('، '));
+      if (cut < MC_MIN_CHARS) cut = window_.lastIndexOf(' ', MC_MAX_CHARS);
+      if (cut < MC_MIN_CHARS) cut = MC_MAX_CHARS;
+      units.push(rest.slice(0, cut+1).trim());
+      rest = rest.slice(cut+1).trim();
+    }
+    if (rest) units.push(rest);
+  });
+  return units.filter(u => u.length >= 4);
+}
+
+// يحوّل مفتاح المصدر (مثل "0-intro" أو "0-2-intro" أو "0-2-5") إلى النص
+// الفعلي المطلوب تقسيمه، من بيانات الكتب مباشرة.
+function _mcResolveText(key) {
+  const parts = key.split('-').map(p => p==='intro' ? p : parseInt(p,10));
+  const book = B[parts[0]];
+  if (!book) return null;
+  if (parts.length === 2 && parts[1] === 'intro') return book.intro || '';
+  if (parts.length === 3 && parts[2] === 'intro') return (book.babs[parts[1]] || {}).intro || '';
+  if (parts.length === 3) return ((book.babs[parts[1]] || {}).fasls[parts[2]] || {}).content || '';
+  return null;
+}
+
+// يبني بطاقات مصدر واحد: يستخدم دمجاً يدوياً محفوظاً إن وُجد (المستخدم
+// عدّله سابقاً)، وإلا يُولّد تلقائياً حسب إعدادات المستخدم الحالية.
+function buildMemoCardsForSource(key) {
+  if (_mcCache[key]) return _mcCache[key];
+  const override = loadLS('mc_merged_'+key, null);
+  if (override && override.length) { _mcCache[key] = override; return override; }
+  const text = _mcResolveText(key);
+  const units = _mcSplitUnits(text);
+  const cards = [];
+  let cur = null;
+  units.forEach(u => {
+    const canAdd = cur && cur.items.length < _mcSettings.maxItems &&
+      (cur.charCount + u.length + 1) <= MC_MAX_CHARS;
+    if (canAdd) { cur.items.push(u); cur.charCount += u.length+1; }
+    else { if (cur) cards.push(cur.items.join(MC_SEP)); cur = {items:[u], charCount:u.length}; }
+  });
+  if (cur) cards.push(cur.items.join(MC_SEP));
+  _mcCache[key] = cards;
+  return cards;
+}
+
+function toggleMemoCardsInline(key, btnEl) {
+  const body = document.getElementById('mc-inline-'+key);
+  const wasOpen = body.classList.contains('open');
+  body.classList.toggle('open', !wasOpen);
+  btnEl.classList.toggle('on', !wasOpen);
+  btnEl.setAttribute('aria-expanded', (!wasOpen).toString());
+  if (!wasOpen) renderMemoCardsInline(key);
+}
+
+function renderMemoCardsInline(key) {
+  const body = document.getElementById('mc-inline-'+key);
+  const cards = buildMemoCardsForSource(key);
+  if (!cards.length) { body.innerHTML = '<div class="mc-empty">لا يوجد نص كافٍ هنا لإنشاء بطاقات حفظ.</div>'; return; }
+  const hasOverride = !!loadLS('mc_merged_'+key, null);
+
+  body.innerHTML = `
+    <div class="mc-note">⚠️ تقسيم تلقائي تقريبي بحدود الفقرات وعلامات الوقف، وليس تحليلاً فقهياً دقيقاً لحدود كل مسألة — راجع أصل النص أعلاه عند اللبس. يمكنك دمج أي بطاقتين متجاورتين يدوياً بالأزرار أسفل كل بطاقة.</div>
+    <div class="mc-settings">
+      <label>إطار البطاقات
+        <select onchange="mcSetSetting('frame', this.value, '${key}')">
+          <option value="frame-gold" ${_mcSettings.frame==='frame-gold'?'selected':''}>ذهبي مزدوج</option>
+          <option value="frame-classic" ${_mcSettings.frame==='frame-classic'?'selected':''}>كلاسيكي مزخرف</option>
+          <option value="frame-simple" ${_mcSettings.frame==='frame-simple'?'selected':''}>بسيط</option>
+          <option value="frame-dashed" ${_mcSettings.frame==='frame-dashed'?'selected':''}>متقطّع</option>
+          <option value="frame-none" ${_mcSettings.frame==='frame-none'?'selected':''}>بدون إطار</option>
+        </select>
+      </label>
+      <label>خلفية البطاقات
+        <select onchange="mcSetSetting('bg', this.value, '${key}')">
+          <option value="parchment" ${_mcSettings.bg==='parchment'?'selected':''}>ورقي كلاسيكي</option>
+          <option value="white" ${_mcSettings.bg==='white'?'selected':''}>أبيض ناصع</option>
+          <option value="dark" ${_mcSettings.bg==='dark'?'selected':''}>داكن أنيق</option>
+          <option value="green" ${_mcSettings.bg==='green'?'selected':''}>أخضر هادئ</option>
+        </select>
+      </label>
+      <label>مسائل لكل بطاقة
+        <select onchange="mcSetSetting('maxItems', parseInt(this.value,10), '${key}')">
+          <option value="1" ${_mcSettings.maxItems===1?'selected':''}>مسألة واحدة</option>
+          <option value="2" ${_mcSettings.maxItems===2?'selected':''}>حتى مسألتين</option>
+          <option value="3" ${_mcSettings.maxItems===3?'selected':''}>حتى ٣ مسائل</option>
+        </select>
+      </label>
+      ${hasOverride ? `<button class="mc-reset-btn" onclick="mcResetMerge('${key}')">🔄 إعادة الضبط التلقائي لهذا القسم</button>` : ''}
+    </div>
+    <div class="mc-grid">
+      ${cards.map((text,i) => `
+        <div class="memo-card ${_mcSettings.frame}" data-bg="${_mcSettings.bg}">
+          <div class="mc-txt" onclick="startCardMemo2('${key}',${i})" role="button" tabindex="0" aria-label="بطاقة حفظ رقم ${i+1}، اضغط لبدء التسميع">${text}</div>
+          <div class="mc-hint" onclick="startCardMemo2('${key}',${i})">🎯 اضغط لتسميعها</div>
+          <div class="mc-merge-row">
+            ${i>0 ? `<button class="mc-merge-btn" onclick="mcMergeCard('${key}',${i},'prev')" title="دمج مع البطاقة السابقة">⬅ دمج بالسابقة</button>` : '<span></span>'}
+            ${i<cards.length-1 ? `<button class="mc-merge-btn" onclick="mcMergeCard('${key}',${i},'next')" title="دمج مع البطاقة التالية">دمج باللاحقة ➡</button>` : '<span></span>'}
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function mcSetSetting(settingKey, value, currentKey) {
+  _mcSettings[settingKey] = value;
+  saveLS('mc_'+settingKey, value);
+  if (settingKey === 'maxItems') {
+    // نُعيد بناء كل الأقسام غير المُعدَّلة يدوياً فقط (احتراماً لدمج المستخدم اليدوي)
+    Object.keys(_mcCache).forEach(k => { if (!loadLS('mc_merged_'+k, null)) delete _mcCache[k]; });
+  }
+  renderMemoCardsInline(currentKey);
+}
+
+// دمج بطاقة بجارتها (السابقة أو اللاحقة) يدوياً، ويُحفظ هذا التعديل
+// ليبقى كما هو في زياراتك القادمة لهذا القسم تحديداً.
+function mcMergeCard(key, idx, dir) {
+  let cards = (_mcCache[key] || buildMemoCardsForSource(key)).slice();
+  if (dir === 'prev' && idx > 0) {
+    cards[idx-1] = cards[idx-1] + MC_SEP + cards[idx];
+    cards.splice(idx, 1);
+  } else if (dir === 'next' && idx < cards.length-1) {
+    cards[idx] = cards[idx] + MC_SEP + cards[idx+1];
+    cards.splice(idx+1, 1);
+  } else return;
+  _mcCache[key] = cards;
+  saveLS('mc_merged_'+key, cards);
+  renderMemoCardsInline(key);
+  toast('🔗','تم دمج البطاقتين');
+}
+function mcResetMerge(key) {
+  localStorage.removeItem('mc_merged_'+key);
+  delete _mcCache[key];
+  renderMemoCardsInline(key);
+  toast('🔄','أُعيد الضبط التلقائي لهذا القسم');
+}
+
+function startCardMemo2(key, cardIdx) {
+  const cards = _mcCache[key];
+  if (!cards || !cards[cardIdx]) return;
+  // النص الفعلي للمراجعة بلا الفواصل الزخرفية بين المسائل داخل البطاقة
+  const text = cards[cardIdx].replace(/\s*◆\s*/g, '  ');
+  startMemoWithText(text);
 }
 
 </script>
