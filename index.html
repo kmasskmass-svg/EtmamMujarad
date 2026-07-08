@@ -841,6 +841,43 @@ button,input,select{font-family:inherit}
 .card-act-btn.secondary:hover{border-color:var(--c-gold)}
 .card-hint{font-size:11px;color:var(--c-text3);text-align:center;line-height:1.7}
 
+/* ═══════════════════════════════════════════════
+   MEMORIZATION REVIEW (مراجعة الحفظ)
+═══════════════════════════════════════════════ */
+.memo-hint{font-size:12.5px;color:var(--c-text2);text-align:center;line-height:1.8;margin-bottom:14px}
+.memo-blank-box{
+  background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;
+  padding:20px 18px;font-size:19px;line-height:2.2;text-align:center;
+  font-family:'Scheherazade New',serif;min-height:80px;margin-bottom:12px;
+  word-spacing:4px;
+}
+.memo-word{
+  display:inline-block;color:var(--c-text3);letter-spacing:1px;
+  transition:color .25s;
+}
+.memo-word.memo-revealed{
+  color:var(--c-text);font-weight:600;
+  animation:memoPop .3s ease;
+}
+@keyframes memoPop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.memo-result{
+  text-align:center;font-size:13.5px;font-weight:700;min-height:20px;
+  margin-bottom:14px;color:var(--c-accent);
+}
+.memo-section{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.memo-or{text-align:center;font-size:11.5px;color:var(--c-text3);margin:6px 0}
+.memo-textarea{
+  width:100%;background:var(--c-bg2);border:1px solid var(--c-border);
+  border-radius:9px;padding:10px 12px;font-size:14px;color:var(--c-text);
+  font-family:inherit;resize:vertical;direction:rtl;
+}
+.memo-textarea:focus{border-color:var(--c-accent);outline:none}
+.memo-actions-row{display:flex;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--c-border)}
+.memo-actions-row .card-act-btn{flex:1}
+#memo-mic-btn.listening{
+  background:#a51d1d;animation:pulse 1.2s ease-in-out infinite;
+}
+
 @media(max-width:700px){
   .card-stage{flex-basis:100%}
   .card-sidebar{flex-basis:100%;max-width:none}
@@ -898,6 +935,170 @@ button,input,select{font-family:inherit}
 .share-step-txt{font-size:14px;line-height:1.9;color:var(--c-text2)}
 .share-step-txt b{color:var(--c-accent)}
 .share-app-row{display:flex;gap:10px;margin-top:4px;flex-wrap:wrap}
+
+/* ═══════════════════════════════════════════════
+   ICONS GUIDE FAB (دليل الأيقونات) — فوق كرة المشاركة
+═══════════════════════════════════════════════ */
+#guide-fab-wrap{
+  position:fixed;bottom:136px;left:28px;z-index:95;
+}
+#guide-fab{
+  display:flex;align-items:center;gap:8px;
+  background:var(--c-surface);color:var(--c-accent);border:1.5px solid var(--c-accent);
+  padding:11px 16px 11px 14px;border-radius:30px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,.22);
+  font-family:var(--font);font-size:13.5px;font-weight:700;
+  transition:all .18s;
+}
+#guide-fab:hover{background:var(--c-accent);color:#fff;transform:translateY(-3px)}
+#guide-fab .sf-ic{font-size:17px}
+@media(max-width:800px){
+  #guide-fab .sf-txt{display:none}
+  #guide-fab{padding:12px;border-radius:50%}
+}
+#guide-pop{
+  position:absolute;bottom:calc(100% + 12px);left:0;
+  width:360px;max-width:88vw;max-height:72vh;overflow-y:auto;
+  background:var(--c-surface);border:1px solid var(--c-border);
+  border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.3);
+  padding:14px 16px 16px;
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:all .18s ease;
+}
+#guide-fab-wrap.open #guide-pop{
+  opacity:1;visibility:visible;transform:translateY(0);
+}
+.guide-section-title{
+  font-size:12px;font-weight:800;color:var(--c-gold);
+  margin:16px 0 8px;padding-bottom:5px;border-bottom:1px dashed var(--c-border);
+  display:flex;align-items:center;gap:6px;
+}
+.guide-section-title:first-child{margin-top:0}
+.guide-item{display:flex;gap:10px;align-items:flex-start;margin-bottom:11px}
+.guide-icon{
+  flex-shrink:0;width:30px;height:30px;border-radius:8px;
+  background:var(--c-bg2);border:1px solid var(--c-border);
+  display:flex;align-items:center;justify-content:center;font-size:15px;
+}
+.guide-txt{font-size:12px;line-height:1.75;color:var(--c-text2)}
+.guide-txt b{color:var(--c-text)}
+
+/* ═══════════════════════════════════════════════
+   READER (TTS) FAB + POPOVER
+═══════════════════════════════════════════════ */
+#reader-fab-wrap{
+  position:fixed;bottom:82px;right:28px;z-index:250;
+}
+#reader-fab{
+  display:flex;align-items:center;gap:8px;
+  background:var(--c-accent);color:#fff;border:none;
+  padding:11px 14px 11px 16px;border-radius:30px;cursor:pointer;
+  box-shadow:0 4px 18px rgba(140,28,28,.45);
+  font-family:var(--font);font-size:13.5px;font-weight:700;
+  transition:all .18s;
+}
+#reader-fab:hover{background:var(--c-accent2);transform:translateY(-3px)}
+#reader-fab.speaking{animation:pulse 1.4s ease-in-out infinite}
+#reader-fab .sf-ic{font-size:17px}
+@media(max-width:800px){
+  #reader-fab .sf-txt{display:none}
+  #reader-fab{padding:12px;border-radius:50%}
+}
+#reader-pop{
+  position:absolute;bottom:calc(100% + 12px);right:0;
+  width:280px;max-width:80vw;
+  background:var(--c-surface);border:1px solid var(--c-border);
+  border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.28);
+  padding:14px 16px 16px;
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:all .18s ease;
+}
+#reader-fab-wrap:hover #reader-pop,
+#reader-fab-wrap.open #reader-pop{
+  opacity:1;visibility:visible;transform:translateY(0);
+}
+.reader-status{font-size:11.5px;color:var(--c-text2);text-align:center;margin-bottom:10px;line-height:1.7;min-height:32px}
+.reader-controls{display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:12px}
+.reader-ctrl-btn{
+  width:36px;height:36px;border-radius:50%;border:1px solid var(--c-border);
+  background:var(--c-bg2);color:var(--c-text);cursor:pointer;font-size:14px;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;
+}
+.reader-ctrl-btn:hover{border-color:var(--c-gold)}
+.reader-ctrl-btn.primary{
+  width:46px;height:46px;font-size:18px;
+  background:var(--c-accent);color:#fff;border-color:var(--c-accent);
+}
+.reader-ctrl-btn.primary:hover{background:var(--c-accent2)}
+.reader-ctrl-btn:disabled{opacity:.45;cursor:default}
+.reader-warn{
+  font-size:10.5px;color:#a15c00;background:rgba(212,168,32,.14);
+  border-radius:8px;padding:8px 10px;margin-top:10px;line-height:1.7;
+}
+.reading-now{
+  background:rgba(212,168,32,.18)!important;
+  border-radius:6px;box-shadow:0 0 0 2px rgba(212,168,32,.3);
+  transition:background .3s;
+}
+
+/* ═══════════════════════════════════════════════
+   READER HELP FAB (تعليمات القارئ الآلي) — نافذة منبثقة
+═══════════════════════════════════════════════ */
+#reader-help-fab-wrap{
+  position:fixed;bottom:28px;right:28px;z-index:250;
+}
+#reader-help-fab{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--c-surface);color:var(--c-accent);border:1.5px solid var(--c-accent);
+  cursor:pointer;font-size:17px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
+  transition:all .18s;
+}
+#reader-help-fab:hover{background:var(--c-accent);color:#fff;transform:translateY(-3px)}
+#reader-help-pop{
+  position:absolute;bottom:calc(100% + 12px);right:0;
+  width:300px;max-width:82vw;max-height:65vh;overflow-y:auto;
+  background:var(--c-surface);border:1px solid var(--c-border);
+  border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.28);
+  padding:14px 16px 16px;
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:all .18s ease;
+}
+#reader-help-fab-wrap:hover #reader-help-pop,
+#reader-help-fab-wrap.open #reader-help-pop{
+  opacity:1;visibility:visible;transform:translateY(0);
+}
+
+/* skip link */
+.skip-link{
+  position:absolute;top:-60px;right:12px;z-index:2000;
+  background:var(--c-accent);color:#fff;padding:10px 18px;border-radius:0 0 8px 8px;
+  font-size:13.5px;font-weight:700;text-decoration:none;transition:top .15s;
+}
+.skip-link:focus{top:0}
+
+/* ═══════════════════════════════════════════════
+   HEADER DROPDOWN POPOVER (إمكانية الوصول)
+═══════════════════════════════════════════════ */
+.hb-pop-wrap{position:relative;display:inline-flex}
+#a11y-pop{
+  position:absolute;top:calc(100% + 10px);left:0;
+  width:280px;max-width:85vw;max-height:70vh;overflow-y:auto;
+  background:var(--c-surface);border:1px solid var(--c-border);
+  border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.28);
+  padding:14px 16px 16px;
+  opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:all .18s ease;
+  z-index:400;
+}
+.hb-pop-wrap:hover #a11y-pop,
+.hb-pop-wrap.open #a11y-pop{
+  opacity:1;visibility:visible;transform:translateY(0);
+}
+@media(max-width:800px){
+  #a11y-pop{left:auto;right:0}
+}
 .share-app-chip{
   display:flex;align-items:center;gap:6px;background:var(--c-bg2);
   border:1px solid var(--c-border);border-radius:20px;padding:6px 13px;font-size:12.5px;
@@ -1002,6 +1203,8 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
 </head>
 <body data-fs="md" data-font="sch">
 
+<a href="#content" class="skip-link">تخطَّ إلى محتوى الكتاب</a>
+
 <!-- LOADER -->
 <div id="loader">
   <div class="loader-icon">📚</div>
@@ -1013,9 +1216,11 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
 
 <!-- SELECTION BAR -->
 <div id="sel-bar">
-  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="doSelCopy()">📋 نسخ</button>
-  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="doSelSearch()">🔍 بحث</button>
-  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="openCardExport()">🖼️ تصدير بطاقة</button>
+  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="doSelCopy()" aria-label="نسخ النص المُظلَّل">📋 نسخ</button>
+  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="doSelSearch()" aria-label="بحث عن النص المُظلَّل">🔍 بحث</button>
+  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="openCardExport()" aria-label="تصدير النص المُظلَّل كبطاقة صورة">🖼️ تصدير بطاقة</button>
+  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="doSelRead()" aria-label="قراءة النص المُظلَّل صوتياً">🔊 قراءة</button>
+  <button class="sb-btn" onmousedown="event.preventDefault()" onclick="openMemo()" aria-label="مراجعة حفظ النص المُظلَّل">🎯 مراجعة</button>
 </div>
 
 <div id="app">
@@ -1024,7 +1229,7 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
 <div id="sb-overlay" onclick="closeSidebarMobile()"></div>
 
 <!-- ═══ SIDEBAR ═══ -->
-<aside id="sidebar">
+<aside id="sidebar" role="navigation" aria-label="فهرس الكتب والأبواب">
   <div id="sb-head">
     <div class="sb-logo">
       <span class="sb-logo-icon">📖</span>
@@ -1043,7 +1248,7 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
 <div id="main">
 
   <header id="header">
-    <button id="h-toggle" onclick="toggleSidebar()">☰</button>
+    <button id="h-toggle" onclick="toggleSidebar()" aria-label="فتح/إغلاق فهرس الكتب" aria-expanded="true">☰</button>
     <div id="h-title">متن إتمام المطالب</div>
     <div id="h-search-wrap">
       <input id="h-search" type="text" placeholder="ابحث في الكتاب…"
@@ -1052,11 +1257,24 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
       <span style="color:rgba(242,228,200,.25);font-size:11px">⌘K</span>
     </div>
     <div class="h-btns">
-      <button class="hb hb-tip" onclick="openSearch()" data-tip="بحث متقدم">🔍</button>
-      <button class="hb hb-tip" onclick="openBookmarks()" data-tip="العلامات">🔖</button>
-      <button class="hb hb-tip" onclick="openSettings()" data-tip="الإعدادات">⚙️</button>
-      <button class="hb hb-tip" id="btn-read" onclick="toggleReading()" data-tip="وضع القراءة">👁</button>
-      <button class="hb hb-tip" onclick="window.print()" data-tip="طباعة">🖨️</button>
+      <button class="hb hb-tip" onclick="openSearch()" data-tip="بحث متقدم" aria-label="بحث متقدم">🔍</button>
+      <button class="hb hb-tip" onclick="openBookmarks()" data-tip="العلامات" aria-label="العلامات المرجعية">🔖</button>
+      <button class="hb hb-tip" onclick="openSettings()" data-tip="الإعدادات" aria-label="الإعدادات">⚙️</button>
+      <button class="hb hb-tip" id="btn-read" onclick="toggleReading()" data-tip="وضع القراءة" aria-label="تفعيل وضع القراءة" aria-pressed="false">👁</button>
+      <button class="hb hb-tip" onclick="window.print()" data-tip="طباعة" aria-label="طباعة">🖨️</button>
+      <div class="hb-pop-wrap" id="a11y-wrap">
+        <button class="hb hb-tip" onclick="toggleA11yPop(event)" data-tip="إمكانية الوصول" aria-label="معلومات إمكانية الوصول لذوي الاحتياجات الخاصة" aria-expanded="false" aria-haspopup="true">♿</button>
+        <div id="a11y-pop" onclick="event.stopPropagation()" role="dialog" aria-labelledby="a11y-pop-title">
+          <div class="sp-title" id="a11y-pop-title">♿ إمكانية الوصول</div>
+          <div class="sp-list">
+            <div class="sp-item"><span class="sp-num">♿</span><span>هذا الموقع مصمَّم ليكون متاحاً للمكفوفين وضعاف البصر ومستخدمي لوحة المفاتيح وقارئات الشاشة، ومتوافق كاملاً مع جميع أنواع الجوالات.</span></div>
+            <div class="sp-item"><span class="sp-num">١</span><span><b>القراءة الصوتية:</b> استخدم <b>🔊 القارئ الآلي</b> لتحويل أي كتاب أو نص مُظلَّل إلى صوت مسموع كامل.</span></div>
+            <div class="sp-item"><span class="sp-num">٢</span><span><b>لوحة المفاتيح:</b> كل الأزرار تعمل بمفتاح Tab ثم Enter، ورابط "تخطَّ إلى المحتوى" يظهر أول ضغطة Tab لتجاوز القوائم مباشرة.</span></div>
+            <div class="sp-item"><span class="sp-num">٣</span><span><b>قارئات الشاشة:</b> كل الأزرار الرمزية تحمل تسميات نصية واضحة (aria-label)، وتُعلن رسائل الحالة تلقائياً.</span></div>
+            <div class="sp-item"><span class="sp-num">٤</span><span><b>تكبير النص:</b> يمكنك التكبير من إعدادات متصفحك (Ctrl/⌘ و+/-)، أو من قائمة ⚙️ الإعدادات داخل الموقع.</span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -1066,7 +1284,7 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
     <span class="bc-link" onclick="goHome()">🏠 الرئيسية</span>
   </nav>
 
-  <div id="content">
+  <div id="content" role="main" tabindex="-1" aria-label="محتوى الكتاب">
     <div id="page"></div>
   </div>
 
@@ -1079,7 +1297,7 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
     <div class="panel-head">
       <span style="font-size:18px">🔍</span>
       <div class="panel-title">البحث في الكتاب</div>
-      <button class="panel-close" onclick="closeSearch()">✕</button>
+      <button class="panel-close" onclick="closeSearch()" aria-label="إغلاق نافذة البحث">✕</button>
     </div>
     <div id="srch-inp-wrap" style="padding:14px 16px 10px;border-bottom:1px solid var(--c-border);flex-shrink:0">
       <input id="srch-inp" type="text" placeholder="ابحث عن نص في الكتاب… (بلا حاجة للتشكيل)"
@@ -1102,7 +1320,7 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
     <div class="panel-head">
       <span style="font-size:18px">⚙️</span>
       <div class="panel-title">الإعدادات</div>
-      <button class="panel-close" onclick="closeSettings()">✕</button>
+      <button class="panel-close" onclick="closeSettings()" aria-label="إغلاق نافذة الإعدادات">✕</button>
     </div>
     <div class="panel-body">
 
@@ -1177,7 +1395,7 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
     <div class="panel-head">
       <span style="font-size:18px">🔖</span>
       <div class="panel-title">العلامات المرجعية</div>
-      <button class="panel-close" onclick="closeBookmarks()">✕</button>
+      <button class="panel-close" onclick="closeBookmarks()" aria-label="إغلاق نافذة العلامات">✕</button>
     </div>
     <div class="panel-body" id="bm-list"></div>
   </div>
@@ -1189,7 +1407,7 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
     <div class="panel-head">
       <span style="font-size:18px">🖼️</span>
       <div class="panel-title">تصدير بطاقة اقتباس</div>
-      <button class="panel-close" onclick="closeCardExport()">✕</button>
+      <button class="panel-close" onclick="closeCardExport()" aria-label="إغلاق نافذة تصدير البطاقة">✕</button>
     </div>
     <div class="card-modal-body">
 
@@ -1269,9 +1487,114 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
   </div>
 </div>
 
+<!-- ═══ MEMORIZATION REVIEW (مراجعة الحفظ) ═══ -->
+<div class="overlay" id="memo-ov" onclick="closeMemo()">
+  <div class="panel" id="memo-panel" onclick="event.stopPropagation()" role="dialog" aria-labelledby="memo-title">
+    <div class="panel-head">
+      <span style="font-size:18px">🎯</span>
+      <div class="panel-title" id="memo-title">مراجعة الحفظ</div>
+      <button class="panel-close" onclick="closeMemo()" aria-label="إغلاق مراجعة الحفظ">✕</button>
+    </div>
+    <div class="panel-body" style="padding:20px">
+      <div class="memo-hint">👁️‍🗨️ حاول تسميع هذا المقطع من حفظك — بصوتك أو بالكتابة — وسيُملأ الفراغ تلقائياً كلما أصبت</div>
+      <div class="memo-blank-box" id="memo-blank-box" aria-live="polite"></div>
+      <div class="memo-result" id="memo-result" role="status" aria-live="polite"></div>
+
+      <div class="memo-section">
+        <button class="card-act-btn primary" id="memo-mic-btn" onclick="memoToggleListen()">🎙️ ابدأ التسميع بالصوت</button>
+      </div>
+      <div class="memo-or">— أو —</div>
+      <div class="memo-section">
+        <textarea id="memo-type-input" class="memo-textarea" rows="3" placeholder="اكتب هنا ما تحفظه من هذا المقطع…" aria-label="اكتب ما تحفظه من هذا المقطع"></textarea>
+        <button class="card-act-btn secondary" onclick="memoCheckTyped()">✅ تحقّق مما كتبت</button>
+      </div>
+
+      <div class="memo-actions-row">
+        <button class="card-act-btn secondary" onclick="memoReveal()">👁️ إظهار الإجابة كاملة</button>
+        <button class="card-act-btn secondary" onclick="memoReset()">🔄 إعادة المحاولة</button>
+      </div>
+      <div class="reader-warn" id="memo-warn" style="display:none">⚠️ التسميع الصوتي غير مدعوم في متصفحك (يعمل غالباً في Chrome على أندرويد وويندوز). استخدم وضع الكتابة بدلاً منه.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ICONS GUIDE FAB (دليل الأيقونات) ═══ -->
+<div id="guide-fab-wrap">
+  <button id="guide-fab" onclick="toggleGuidePop(event)" aria-label="دليل استخدام جميع أيقونات التطبيق" aria-expanded="false" aria-haspopup="true">
+    <span class="sf-ic">📘</span><span class="sf-txt">دليل الأيقونات</span>
+  </button>
+  <div id="guide-pop" onclick="event.stopPropagation()" role="dialog" aria-labelledby="guide-title">
+    <div class="sp-title" id="guide-title">📘 دليل استخدام أيقونات التطبيق</div>
+
+    <div class="guide-section-title">🔝 رأس الصفحة</div>
+    <div class="guide-item"><div class="guide-icon">☰</div><div class="guide-txt"><b>القائمة/الفهرس:</b> يفتح ويغلق فهرس الكتب والأبواب الجانبي. على الجوال يظهر فوق المحتوى مع طبقة تعتيم خلفه، وعلى الحاسوب يدفع المحتوى جانباً.</div></div>
+    <div class="guide-item"><div class="guide-icon">⌨️</div><div class="guide-txt"><b>خانة البحث السريع (أعلى الرأس):</b> اكتب فيها أي كلمة وستُفتح نتائج فورية أثناء الكتابة. اضغط Enter أو ⌘K/Ctrl+K لفتح نافذة البحث المتقدم كاملة بخياراتها.</div></div>
+    <div class="guide-item"><div class="guide-icon">🔍</div><div class="guide-txt"><b>بحث متقدم:</b> يفتح نافذة بحث كاملة في كل الكتاب، مع إمكانية اختيار نمط المطابقة (اطلع على قسم "نافذة البحث المتقدم" أدناه لتفاصيلها).</div></div>
+    <div class="guide-item"><div class="guide-icon">🔖</div><div class="guide-txt"><b>العلامات المرجعية:</b> يفتح نافذة تعرض كل الأبواب التي وضعت عليها علامة 🔖 من قبل، لتعود إليها بضغطة واحدة.</div></div>
+    <div class="guide-item"><div class="guide-icon">⚙️</div><div class="guide-txt"><b>الإعدادات:</b> يفتح نافذة لتخصيص شكل القراءة (اطلع على قسم "نافذة الإعدادات" أدناه).</div></div>
+    <div class="guide-item"><div class="guide-icon">👁</div><div class="guide-txt"><b>وضع القراءة:</b> يخفي القائمة الجانبية مؤقتاً ويوسّع مساحة النص لقراءة مريحة بلا تشتيت. اضغطه ثانية للعودة للوضع العادي. اختصار لوحة المفاتيح: Ctrl+R.</div></div>
+    <div class="guide-item"><div class="guide-icon">🖨️</div><div class="guide-txt"><b>طباعة:</b> يفتح نافذة طباعة المتصفح لطباعة الصفحة الحالية مباشرة أو حفظها كملف PDF.</div></div>
+    <div class="guide-item"><div class="guide-icon">🏠</div><div class="guide-txt"><b>الرئيسية (في شريط المسار أعلى المحتوى):</b> يعيدك لصفحة عرض كل الكتب من البداية في أي وقت.</div></div>
+
+    <div class="guide-section-title">📚 الفهرس الجانبي</div>
+    <div class="guide-item"><div class="guide-icon">📖</div><div class="guide-txt"><b>اسم الكتاب في الفهرس:</b> اضغط عليه ليفتح ذلك الكتاب. إن كان له أبواب، يظهر سهم ▶ يدور ليكشف قائمة أبوابه الفرعية دون مغادرة الفهرس.</div></div>
+    <div class="guide-item"><div class="guide-icon">▶</div><div class="guide-txt"><b>اسم الباب تحت الكتاب:</b> اضغط عليه للانتقال مباشرة إلى ذلك الباب داخل صفحة الكتاب، أياً كان طوله أو بُعده.</div></div>
+
+    <div class="guide-section-title">📄 داخل صفحة الكتاب</div>
+    <div class="guide-item"><div class="guide-icon">🃏</div><div class="guide-txt"><b>بطاقة الكتاب (في الصفحة الرئيسية):</b> كل كتاب يظهر كبطاقة قابلة للضغط تفتحه مباشرة.</div></div>
+    <div class="guide-item"><div class="guide-icon">١</div><div class="guide-txt"><b>رقم الباب ورأسه:</b> اضغط على شريط عنوان الباب لطيّه أو فتحه (إظهار/إخفاء محتواه). رقم الباب بالأرقام العربية يسبق عنوانه دائماً.</div></div>
+    <div class="guide-item"><div class="guide-icon">🔖</div><div class="guide-txt"><b>علامة الباب المرجعية:</b> زر صغير بجانب كل باب لوضع/إزالة علامة مرجعية عليه، يتحول لونه عند التفعيل ليدل على أنه محفوظ في نافذة "العلامات".</div></div>
+    <div class="guide-item"><div class="guide-icon">▾</div><div class="guide-txt"><b>سهم طيّ الفصل:</b> كل فصل داخل الباب له عنوان صغير مع نقطة ● وسهم، اضغط عليه لطيّ أو نشر نص ذلك الفصل تحديداً بشكل مستقل عن بقية فصول الباب.</div></div>
+
+    <div class="guide-section-title">✋ عند تظليل أي نص</div>
+    <div class="guide-item"><div class="guide-icon">📋</div><div class="guide-txt"><b>نسخ:</b> ينسخ النص المظلَّل إلى الحافظة مباشرة لتلصقه في أي مكان آخر.</div></div>
+    <div class="guide-item"><div class="guide-icon">🔍</div><div class="guide-txt"><b>بحث:</b> يفتح نافذة البحث المتقدم ويبحث تلقائياً عن نفس النص المظلَّل في كل الكتاب.</div></div>
+    <div class="guide-item"><div class="guide-icon">🖼️</div><div class="guide-txt"><b>تصدير بطاقة:</b> يحوّل النص المظلَّل إلى بطاقة اقتباس جاهزة للمشاركة أو الحفظ (تفاصيلها في القسم التالي).</div></div>
+    <div class="guide-item"><div class="guide-icon">🎯</div><div class="guide-txt"><b>مراجعة:</b> يفتح نافذة "مراجعة الحفظ" لاختبار حفظك لهذا المقطع تحديداً (تفاصيلها أدناه).</div></div>
+    <div class="guide-txt" style="margin-top:-4px;margin-bottom:11px;opacity:.75">ℹ️ زر "🔊 قراءة" (قراءة النص المُظلَّل صوتياً) موثَّق بالكامل في دليل القارئ الآلي المنفصل.</div>
+
+    <div class="guide-section-title">🖼️ نافذة تصدير بطاقة الاقتباس</div>
+    <div class="guide-item"><div class="guide-icon">🔲</div><div class="guide-txt"><b>إطار البطاقة:</b> يختار شكل الحدّ الخارجي للبطاقة من 5 أشكال (ذهبي مزدوج، كلاسيكي مزخرف، بسيط، متقطّع، أو بلا إطار).</div></div>
+    <div class="guide-item"><div class="guide-icon">🎨</div><div class="guide-txt"><b>خلفية البطاقة:</b> يختار لون خلفية البطاقة من 4 خيارات (ورقي كلاسيكي، أبيض ناصع، داكن أنيق، أخضر هادئ).</div></div>
+    <div class="guide-item"><div class="guide-icon">🔤</div><div class="guide-txt"><b>نوع الخط:</b> يبدّل خط نص البطاقة بين شهرزاد وأميري ولطيف وخط حديث (Tahoma).</div></div>
+    <div class="guide-item"><div class="guide-icon">🖌️</div><div class="guide-txt"><b>لون الخط:</b> منتقي ألوان لتحديد لون نص البطاقة بدقة.</div></div>
+    <div class="guide-item"><div class="guide-icon">↔️</div><div class="guide-txt"><b>حجم الخط:</b> شريط تمرير لتكبير/تصغير حجم نص البطاقة (من 14 إلى 34).</div></div>
+    <div class="guide-item"><div class="guide-icon">🔘</div><div class="guide-txt"><b>إظهار اليوم والتاريخ:</b> مفتاح تبديل لإظهار أو إخفاء اليوم والتاريخ (هجري وميلادي) في الزاوية اليمنى السفلية من البطاقة.</div></div>
+    <div class="guide-item"><div class="guide-icon">✏️</div><div class="guide-txt"><b>النقر على نص البطاقة:</b> يمكنك النقر مباشرة على عنوان الفقرة أو مصدرها أو نصها داخل معاينة البطاقة وتعديله يدوياً قبل التصدير.</div></div>
+    <div class="guide-item"><div class="guide-icon">⬇️</div><div class="guide-txt"><b>تنزيل الصورة:</b> يحفظ البطاقة كصورة PNG في جهازك.</div></div>
+    <div class="guide-item"><div class="guide-icon">📤</div><div class="guide-txt"><b>مشاركة مباشرة:</b> يفتح قائمة المشاركة المدمجة في جهازك (واتساب، تيليجرام، إلخ) مباشرة إن كانت مدعومة، وإلا يُنزّل الصورة تلقائياً كبديل.</div></div>
+
+    <div class="guide-section-title">🎯 نافذة مراجعة الحفظ</div>
+    <div class="guide-item"><div class="guide-icon">▭</div><div class="guide-txt"><b>الفراغات المنقّطة:</b> تمثّل النص المظلَّل مطموساً بالكامل، كل كلمة كخط منقط بطول مقارب لها.</div></div>
+    <div class="guide-item"><div class="guide-icon">🎙️</div><div class="guide-txt"><b>ابدأ التسميع بالصوت:</b> يستمع لصوتك عبر ميكروفون الجهاز ويقارنه بالنص الأصلي (يحتاج دعم متصفحك؛ يعمل غالباً على Chrome).</div></div>
+    <div class="guide-item"><div class="guide-icon">⌨️</div><div class="guide-txt"><b>مربع الكتابة + تحقّق:</b> بديل يعمل في كل المتصفحات دائماً — اكتب ما تحفظه ثم اضغط "تحقّق مما كتبت".</div></div>
+    <div class="guide-item"><div class="guide-icon">👁️</div><div class="guide-txt"><b>إظهار الإجابة كاملة:</b> يكشف كل الفراغات دفعة واحدة إن أردت الاستسلام أو مراجعة النص كاملاً.</div></div>
+    <div class="guide-item"><div class="guide-icon">🔄</div><div class="guide-txt"><b>إعادة المحاولة:</b> يعيد إخفاء كل الكلمات من جديد لمحاولة تسميع جديدة.</div></div>
+
+    <div class="guide-section-title">🔎 نافذة البحث المتقدم</div>
+    <div class="guide-item"><div class="guide-icon">Aa</div><div class="guide-txt"><b>خانة البحث:</b> النتائج تظهر فور الكتابة، وتتجاهل التشكيل تلقائياً (تكتب "الحمد" فيجد "الحَمْدُ" أيضاً).</div></div>
+    <div class="guide-item"><div class="guide-icon">🔘</div><div class="guide-txt"><b>أزرار نمط البحث الأربعة:</b> <b>بعض كلمة</b> (يجد أي جزء من كلمة)، <b>الكلمة كما هي</b> (كلمة كاملة فقط)، <b>الجملة كما هي</b> (عبارة كاملة بالترتيب)، <b>ولو متفرقة</b> (كل الكلمات موجودة ولو في مواضع متفرقة).</div></div>
+    <div class="guide-item"><div class="guide-icon">📄</div><div class="guide-txt"><b>نتيجة البحث:</b> اضغط على أي نتيجة للانتقال مباشرة إلى موضعها في الكتاب.</div></div>
+
+    <div class="guide-section-title">⚙️ نافذة الإعدادات</div>
+    <div class="guide-item"><div class="guide-icon">🎨</div><div class="guide-txt"><b>نقاط الألوان (المظهر):</b> 5 مظاهر جاهزة: كلاسيكي، بيج، أبيض، داكن، أخضر — تُطبَّق فوراً على كامل التطبيق.</div></div>
+    <div class="guide-item"><div class="guide-icon">🔠</div><div class="guide-txt"><b>حجم الخط:</b> 4 أحجام: صغير، متوسط، كبير، كبير جداً.</div></div>
+    <div class="guide-item"><div class="guide-icon">✒️</div><div class="guide-txt"><b>نوع الخط:</b> شهرزاد أو أميري أو لطيف، مع معاينة مباشرة لشكل كل خط على زره.</div></div>
+    <div class="guide-item"><div class="guide-icon">☑️</div><div class="guide-txt"><b>توسيع كل الأبواب تلقائياً:</b> عند تفعيله، تُفتح كل أبواب أي كتاب دفعة واحدة بدل فتح الباب الأول فقط.</div></div>
+    <div class="guide-item"><div class="guide-icon">☑️</div><div class="guide-txt"><b>إظهار الفصول:</b> يتحكم في عرض أو إخفاء تقسيم الفصول الفرعية داخل كل باب.</div></div>
+
+    <div class="guide-section-title">🔖 نافذة العلامات المرجعية</div>
+    <div class="guide-item"><div class="guide-icon">📑</div><div class="guide-txt"><b>كل علامة محفوظة</b> تعرض اسم الكتاب والباب، اضغط عليها للانتقال إليها مباشرة، أو احذفها من نفس النافذة إن لم تعد بحاجتها.</div></div>
+
+    <div class="guide-section-title">🔼 عناصر عامة</div>
+    <div class="guide-item"><div class="guide-icon">↑</div><div class="guide-txt"><b>العودة لأعلى الصفحة:</b> يظهر أسفل يسار الشاشة بعد التمرير قليلاً، يعيدك لأعلى الصفحة الحالية فوراً.</div></div>
+
+  </div>
+</div>
+
 <!-- ═══ SHARE FAB + POPOVER ═══ -->
 <div id="share-fab-wrap">
-  <button id="share-fab" onclick="toggleSharePop(event)">
+  <button id="share-fab" onclick="toggleSharePop(event)" aria-label="عرض تعليمات مشاركة بطاقة الاقتباس" aria-expanded="false" aria-haspopup="true">
     <span class="sf-ic">📤</span><span class="sf-txt">شارك في النشر</span>
   </button>
   <div id="share-pop" onclick="event.stopPropagation()">
@@ -1284,11 +1607,67 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
   </div>
 </div>
 
+<!-- ═══ READER (TTS) FAB + POPOVER ═══ -->
+<div id="reader-fab-wrap">
+  <button id="reader-fab" onclick="toggleReaderPop(event)" aria-label="فتح لوحة تحكم القارئ الآلي" aria-expanded="false" aria-haspopup="true">
+    <span class="sf-ic">🔊</span><span class="sf-txt">قارئ آلي</span>
+  </button>
+  <div id="reader-pop" onclick="event.stopPropagation()">
+    <div class="sp-title">🔊 القارئ الآلي</div>
+    <div class="reader-status" id="reader-status" role="status" aria-live="polite">افتح كتاباً، ثم اضغط تشغيل للاستماع إليه</div>
+    <div class="reader-controls">
+      <button class="reader-ctrl-btn" onclick="readerPrev()" title="الفقرة السابقة" aria-label="الانتقال إلى الفقرة السابقة">⏮</button>
+      <button class="reader-ctrl-btn primary" id="reader-play-btn" onclick="readerToggle()" title="تشغيل / إيقاف مؤقت" aria-label="تشغيل أو إيقاف القراءة مؤقتاً">▶️</button>
+      <button class="reader-ctrl-btn" onclick="readerStop()" title="إيقاف نهائي" aria-label="إيقاف القراءة نهائياً">⏹</button>
+      <button class="reader-ctrl-btn" onclick="readerNext()" title="الفقرة التالية" aria-label="الانتقال إلى الفقرة التالية">⏭</button>
+    </div>
+    <div class="card-opt">
+      <label class="card-opt-lbl">سرعة القراءة</label>
+      <div class="card-opt-row">
+        <span id="reader-rate-val">1.0×</span>
+        <input type="range" min="0.6" max="2" step="0.1" value="1" oninput="readerSetRate(this.value)">
+      </div>
+    </div>
+    <div class="card-opt">
+      <label class="card-opt-lbl">🔁 تكرار كل مقطع (للحفظ)</label>
+      <select id="reader-repeat-sel" onchange="readerSetRepeat(this.value)">
+        <option value="1" selected>بلا تكرار (مرة واحدة)</option>
+        <option value="2">مرتان</option>
+        <option value="3">3 مرات</option>
+        <option value="5">5 مرات</option>
+        <option value="10">10 مرات</option>
+      </select>
+    </div>
+    <div class="card-opt">
+      <label class="card-opt-lbl">الصوت</label>
+      <select id="reader-voice-sel" onchange="readerSetVoice(this.value)"><option>جارٍ التحميل…</option></select>
+    </div>
+    <div class="reader-warn" id="reader-warn" style="display:none">⚠️ لم يُعثر على صوت عربي في متصفحك، فقد يكون النطق بلكنة غير عربية. للحصول على أفضل نطق عربي جرّب متصفح Chrome على جهاز حديث.</div>
+  </div>
+</div>
+
+<!-- ═══ READER HELP FAB (تعليمات القارئ الآلي) — نافذة منبثقة ═══ -->
+<div id="reader-help-fab-wrap">
+  <button id="reader-help-fab" onclick="toggleReaderHelpPop(event)" aria-label="عرض تعليمات استخدام القارئ الآلي" aria-expanded="false" aria-haspopup="true" title="تعليمات القارئ الآلي">؟</button>
+  <div id="reader-help-pop" onclick="event.stopPropagation()" role="dialog" aria-labelledby="reader-help-title">
+    <div class="sp-title" id="reader-help-title">🔊 دليل استخدام القارئ الآلي</div>
+    <div class="sp-list">
+      <div class="sp-item"><span class="sp-num">١</span><span><b>ما هو؟</b> يحوّل نص الكتاب إلى صوت مسموع داخل متصفحك مباشرة، بلا حاجة لأي تطبيق إضافي.</span></div>
+      <div class="sp-item"><span class="sp-num">٢</span><span><b>قراءة كتاب كامل:</b> افتح كتاباً، اضغط كرة <b>🔊 قارئ آلي</b>، ثم <b>▶️ تشغيل</b>. سيقرأ الكتاب باباً وفصلاً، مع تظليل والانتقال التلقائي لموضع القراءة.</span></div>
+      <div class="sp-item"><span class="sp-num">٣</span><span><b>قراءة نص محدد فقط:</b> ظلّل أي فقرة، ثم اضغط زر <b>🔊 قراءة</b> من الشريط الذي يظهر فوقها.</span></div>
+      <div class="sp-item"><span class="sp-num">٤</span><span><b>الأزرار:</b> ⏮ السابق  •  ▶️/⏸️ تشغيل-إيقاف مؤقت  •  ⏹ إيقاف نهائي  •  ⏭ التالي.</span></div>
+      <div class="sp-item"><span class="sp-num">٥</span><span><b>السرعة والصوت:</b> اضبط السرعة من 0.6× إلى 2×، واختر الصوت من قائمة مصنّفة (نسائي/رجالي/أخرى) حسب المثبَّت على جهازك.</span></div>
+      <div class="sp-item"><span class="sp-num">🔁</span><span><b>للحفظ — تكرار المقطع:</b> من خيار <b>"تكرار كل مقطع"</b> اختر عدد مرات إعادة سماع كل جملة تلقائياً (حتى 10 مرات) قبل الانتقال للتي تليها، فيكرر لك القارئ نفس المقطع بعدد المرات التي تحددها لمساعدتك على حفظه.</span></div>
+      <div class="sp-item"><span class="sp-num">ℹ️</span><span>جودة الصوت تعتمد على جهازك ومتصفحك (Chrome/Edge أفضل عادة)، ولا تتوفر أصوات إنشاد أو ترتيل عبر أي متصفح — نطق عادي فقط.</span></div>
+    </div>
+  </div>
+</div>
+
 <!-- BACK TO TOP -->
-<button id="btt" onclick="scrollTop()">↑</button>
+<button id="btt" onclick="scrollTop()" aria-label="العودة إلى أعلى الصفحة">↑</button>
 
 <!-- TOAST -->
-<div id="toast"><span id="toast-icon"></span><span id="toast-txt"></span></div>
+<div id="toast" role="status" aria-live="polite"><span id="toast-icon"></span><span id="toast-txt"></span></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
@@ -1430,6 +1809,7 @@ function closeSidebarMobile() {
 // ║                RENDER HOME                ║
 // ╚═══════════════════════════════════════════╝
 function renderHome() {
+  if (typeof _reader !== 'undefined' && (_reader.playing || _reader.paused)) readerStop(true);
   S.book = null; S.bab = null;
   savePos(null, null);
   setHeader('متن إتمام المطالب');
@@ -1488,6 +1868,7 @@ function renderHome() {
 function renderBook(bi, cb) {
   const book = B[bi];
   if (!book) return;
+  if (typeof _reader !== 'undefined' && (_reader.playing || _reader.paused) && S.book !== bi) readerStop(true);
 
   S.book = bi; S.bab = null;
   savePos(bi, null);
@@ -1518,7 +1899,7 @@ function renderBook(bi, cb) {
         </div>`).join('') : '';
 
       babsHtml += `
-        <div class="bab ${isOpen}" id="bab-${bi}-${babi}" style="animation-delay:${babi*0.04}s">
+        <div class="bab ${isOpen}" id="bab-${bi}-${babi}" style="animation-delay:${Math.min(babi*0.04,0.2)}s">
           <div class="bab-head" onclick="toggleBab(this,${bi},${babi})">
             <div class="bab-num">${toAr(babi+1)}</div>
             <div class="bab-t">${bab.title}</div>
@@ -1600,11 +1981,13 @@ function scrollToBab(babi) {
   el.classList.add('open');
   setTimeout(() => {
     // انتقال فوري (بلا تمرير سلس) حتى لا "يمرّ" العرض بصرياً على الأبواب
-    // السابقة أثناء نزوله نحو الباب الهدف.
+    // السابقة أثناء نزوله نحو الباب الهدف. المهلة هنا أكبر قليلاً من أقصى
+    // تأخير لحركة الظهور (0.2s) حتى يكون الباب الهدف ظاهراً بالفعل لحظة
+    // التمرير إليه، لا أن يظهر فارغاً ثم "يتلاشى" للداخل بعد وصولنا إليه.
     el.scrollIntoView({behavior:'auto',block:'start'});
     el.style.outline = '2px solid var(--c-gold2)';
     setTimeout(() => el.style.outline = '', 1800);
-  }, 50);
+  }, 260);
 }
 
 function scrollTop(smooth=true) {
@@ -1840,6 +2223,7 @@ function toggleSidebar() {
   S.sidebarOpen = !S.sidebarOpen;
   document.getElementById('sidebar').classList.toggle('closed',!S.sidebarOpen);
   document.getElementById('main').classList.toggle('no-sidebar',!S.sidebarOpen);
+  document.getElementById('h-toggle').setAttribute('aria-expanded', S.sidebarOpen ? 'true':'false');
   if (window.innerWidth < 800) {
     document.getElementById('sb-overlay').classList.toggle('show', S.sidebarOpen);
   }
@@ -1848,6 +2232,7 @@ function toggleReading() {
   S.readingMode = !S.readingMode;
   document.body.classList.toggle('reading-mode',S.readingMode);
   document.getElementById('btn-read').classList.toggle('on',S.readingMode);
+  document.getElementById('btn-read').setAttribute('aria-pressed', S.readingMode ? 'true':'false');
   toast('👁', S.readingMode ? 'وضع القراءة مفعّل' : 'وضع القراءة معطّل');
 }
 
@@ -1868,12 +2253,17 @@ function restorePrefs() {
     document.body.setAttribute('data-font',font);
     document.querySelectorAll('#font-row .set-btn').forEach(b=>{b.classList.toggle('on',b.dataset.ff===font);});
   }
+  const rep = loadLS('reader_repeat', 1);
+  if (typeof _reader !== 'undefined') { _reader.repeatCount = rep; _reader.repeatLeft = rep; }
+  const repSel = document.getElementById('reader-repeat-sel');
+  if (repSel) repSel.value = String(rep);
 }
 
 // ╔═══════════════════════════════════════════╗
 // ║              SELECTION BAR               ║
 // ╚═══════════════════════════════════════════╝
 let _selTimer;
+let _lastSelText = '';
 function onSel() {
   clearTimeout(_selTimer);
   _selTimer = setTimeout(()=>{
@@ -1882,6 +2272,10 @@ function onSel() {
       const selection = window.getSelection();
       const sel = selection ? selection.toString().trim() : '';
       if (sel.length>3 && selection.rangeCount>0) {
+        // نخزّن النص المحدد الآن (بينما التحديد مؤكَّد وموجود) حتى تعمل أزرار
+        // نسخ/بحث/تصدير بطاقة بأمان حتى لو أُلغي التحديد قبل أن يضغط المستخدم
+        // على الزر فعلياً (وهو أمر شائع الحدوث على الجوال).
+        _lastSelText = sel;
         const r = selection.getRangeAt(0).getBoundingClientRect();
         if (!r || (r.width===0 && r.height===0)) { bar.classList.remove('show'); return; }
         const GAP = 64; // مسافة أكبر عن النص المظلل لتجنّب تعارض قائمة المتصفح الأصلية
@@ -1889,16 +2283,22 @@ function onSel() {
         const spaceAbove = r.top;
         const spaceBelow = window.innerHeight - r.bottom;
         let top;
+        // #sel-bar هو position:fixed، لذا يجب أن يكون top نسبياً لإطار العرض
+        // (viewport) فقط، دون إضافة window.scrollY (فذلك خاص بالعناصر
+        // position:absolute/static) — وإلا يظهر الشريط خارج الشاشة كلما مرّرنا
+        // للأسفل، وهو تحديداً ما كان يمنع ظهوره داخل الأبواب والفصول.
         if (spaceAbove > (GAP+barH)) {
           // فوق النص، بمسافة كافية
-          top = r.top + window.scrollY - GAP;
+          top = r.top - GAP;
         } else if (spaceBelow > (GAP+barH)) {
           // لا مساحة كافية فوق -> أسفل النص
-          top = r.bottom + window.scrollY + GAP - barH;
+          top = r.bottom + GAP - barH;
         } else {
           // مساحة ضيقة من الجهتين -> أبعد ما يمكن ضمن الشاشة
-          top = r.bottom + window.scrollY + 14;
+          top = r.bottom + 14;
         }
+        // تحصين إضافي: تأكد أن الشريط يبقى دوماً داخل حدود الشاشة المرئية
+        top = Math.max(8, Math.min(top, window.innerHeight - barH - 8));
         bar.style.top = top+'px';
         bar.style.right = Math.max(8, window.innerWidth-r.right)+'px';
         bar.classList.add('show');
@@ -1912,16 +2312,17 @@ function onSel() {
   },150);
 }
 function doSelCopy() {
-  const sel = window.getSelection().toString().trim();
-  if (sel) navigator.clipboard.writeText(sel).then(()=>toast('📋','تم النسخ'));
+  const sel = (window.getSelection().toString().trim()) || _lastSelText;
+  if (sel) { navigator.clipboard.writeText(sel).then(()=>toast('📋','تم النسخ')); }
+  else toast('✏️','ظلّل نصاً أولاً');
   document.getElementById('sel-bar').classList.remove('show');
 }
 function doSelSearch() {
-  const sel = window.getSelection().toString().trim();
+  const sel = (window.getSelection().toString().trim()) || _lastSelText;
   if (sel) {
     openSearch();
     setTimeout(()=>{ document.getElementById('srch-inp').value=sel; doSearch(sel); },150);
-  }
+  } else toast('✏️','ظلّل نصاً أولاً');
   document.getElementById('sel-bar').classList.remove('show');
 }
 
@@ -2001,7 +2402,6 @@ function saveLS(k,v) { try{localStorage.setItem(k,JSON.stringify(v));}catch{} }
 // ╔═══════════════════════════════════════════╗
 // ║             CARD EXPORT (بطاقة)          ║
 // ╚═══════════════════════════════════════════╝
-let _lastSelText = '';
 function openCardExport() {
   const sel = window.getSelection().toString().trim();
   _lastSelText = sel || _lastSelText;
@@ -2047,6 +2447,31 @@ function openCardExport() {
   document.getElementById('card-ov').classList.add('open');
 }
 function closeCardExport() { document.getElementById('card-ov').classList.remove('open'); }
+
+function toggleReaderHelpPop(e) {
+  e.stopPropagation();
+  const wrap = document.getElementById('reader-help-fab-wrap');
+  wrap.classList.toggle('open');
+  document.getElementById('reader-help-fab').setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true':'false');
+}
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('reader-help-fab-wrap');
+  if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+    wrap.classList.remove('open');
+  }
+});
+function toggleA11yPop(e) {
+  e.stopPropagation();
+  const wrap = document.getElementById('a11y-wrap');
+  wrap.classList.toggle('open');
+  wrap.querySelector('button').setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true':'false');
+}
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('a11y-wrap');
+  if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+    wrap.classList.remove('open');
+  }
+});
 
 function setCardFrame(cls) {
   const el = document.getElementById('card-preview');
@@ -2190,9 +2615,24 @@ async function shareCard() {
 // ╔═══════════════════════════════════════════╗
 // ║           SHARE FAB / INSTRUCTIONS       ║
 // ╚═══════════════════════════════════════════╝
+function toggleGuidePop(e) {
+  e.stopPropagation();
+  const wrap = document.getElementById('guide-fab-wrap');
+  wrap.classList.toggle('open');
+  document.getElementById('guide-fab').setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true':'false');
+}
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('guide-fab-wrap');
+  if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+    wrap.classList.remove('open');
+  }
+});
+
 function toggleSharePop(e) {
   e.stopPropagation();
-  document.getElementById('share-fab-wrap').classList.toggle('open');
+  const wrap = document.getElementById('share-fab-wrap');
+  wrap.classList.toggle('open');
+  document.getElementById('share-fab').setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true':'false');
 }
 document.addEventListener('click', (e) => {
   const wrap = document.getElementById('share-fab-wrap');
@@ -2200,6 +2640,422 @@ document.addEventListener('click', (e) => {
     wrap.classList.remove('open');
   }
 });
+
+// ╔═══════════════════════════════════════════╗
+// ║          READER (TEXT-TO-SPEECH)          ║
+// ╚═══════════════════════════════════════════╝
+const _TTS = ('speechSynthesis' in window);
+let _reader = {
+  queue: [],      // [{text, elId}]
+  idx: -1,
+  playing: false,
+  paused: false,
+  rate: 1,
+  voiceURI: null,
+  bookIdx: null,
+  repeatCount: 1,   // كم مرة يُعاد نطق كل مقطع (للحفظ)
+  repeatLeft: 1,    // كم مرة متبقية للمقطع الحالي
+};
+
+function toggleReaderPop(e) {
+  e.stopPropagation();
+  if (!_TTS) { toast('⚠️','متصفحك لا يدعم القراءة الصوتية'); return; }
+  const wrap = document.getElementById('reader-fab-wrap');
+  wrap.classList.toggle('open');
+  document.getElementById('reader-fab').setAttribute('aria-expanded', wrap.classList.contains('open') ? 'true':'false');
+  readerPopulateVoices();
+}
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('reader-fab-wrap');
+  if (wrap && wrap.classList.contains('open') && !wrap.contains(e.target)) {
+    wrap.classList.remove('open');
+  }
+});
+
+function readerPopulateVoices() {
+  if (!_TTS) return;
+  const sel = document.getElementById('reader-voice-sel');
+  const warnEl = document.getElementById('reader-warn');
+  const voices = speechSynthesis.getVoices();
+  if (!voices.length) return; // ستُستدعى مجدداً عبر voiceschanged
+  const arVoices = voices.filter(v => /^ar/i.test(v.lang));
+  const list = arVoices.length ? arVoices : voices;
+
+  // تصنيف مبدئي (على قدر ما تسمح به بيانات المتصفح) إلى نسائي/رجالي/غير محدد،
+  // اعتماداً على كلمات في اسم الصوت (المتصفحات لا تُعلن الجنس صراحة عادة)
+  const FEMALE_HINTS = /female|أنثى|hoda|salma|zariyah|laila|layla|amina|fatima|noura|nora|mariam|maryam|iman|reem|hala/i;
+  const MALE_HINTS = /male|ذكر|naayf|nayef|hamed|hamid|maged|majed|tarik|tariq|khalid|yousef|yusuf|omar/i;
+  const groups = {female:[], male:[], other:[]};
+  list.forEach(v=>{
+    if (FEMALE_HINTS.test(v.name)) groups.female.push(v);
+    else if (MALE_HINTS.test(v.name)) groups.male.push(v);
+    else groups.other.push(v);
+  });
+  const opt = v => `<option value="${v.voiceURI}">${v.name.replace(/^Microsoft |^Google /,'')} (${v.lang})</option>`;
+  let html = '';
+  if (groups.female.length) html += `<optgroup label="🚺 أصوات نسائية">${groups.female.map(opt).join('')}</optgroup>`;
+  if (groups.male.length)   html += `<optgroup label="🚹 أصوات رجالية">${groups.male.map(opt).join('')}</optgroup>`;
+  if (groups.other.length)  html += `<optgroup label="🔈 أصوات أخرى">${groups.other.map(opt).join('')}</optgroup>`;
+  sel.innerHTML = html;
+
+  warnEl.style.display = 'block';
+  warnEl.innerHTML = arVoices.length
+    ? 'ℹ️ الأصوات المعروضة هي ما يوفّره جهازك ومتصفحك فقط. ملاحظة: لا تتوفر عبر المتصفح أصوات إنشاد أو ترتيل، هذه أصوات نطق عادي فقط.'
+    : '⚠️ لم يُعثر على صوت عربي في متصفحك، فقد يكون النطق بلكنة غير عربية. للحصول على أصوات عربية أكثر وأفضل جرّب متصفح Chrome أو Edge على جهاز حديث.';
+
+  if (!_reader.voiceURI && list.length) _reader.voiceURI = list[0].voiceURI;
+  if (_reader.voiceURI) sel.value = _reader.voiceURI;
+}
+if (_TTS) {
+  speechSynthesis.onvoiceschanged = readerPopulateVoices;
+  readerPopulateVoices();
+}
+
+// يقسّم نصاً طويلاً إلى جمل قصيرة، لتفادي مشكلة توقّف بعض المتصفحات
+// (كروم تحديداً) عن النطق تلقائياً في الجمل الطويلة جداً.
+function splitForSpeech(text) {
+  if (!text) return [];
+  const maxLen = 220;
+  let parts = text.split(/(?<=[.!؟؛])\s+/).filter(p=>p.trim());
+  if (!parts.length) parts = [text];
+  const out = [];
+  parts.forEach(p=>{
+    p = p.trim();
+    if (!p) return;
+    if (p.length<=maxLen) { out.push(p); return; }
+    let rest = p;
+    while (rest.length>maxLen) {
+      let cut = rest.lastIndexOf(' ', maxLen);
+      if (cut<=0) cut = maxLen;
+      out.push(rest.slice(0,cut).trim());
+      rest = rest.slice(cut).trim();
+    }
+    if (rest) out.push(rest);
+  });
+  return out;
+}
+
+// يبني قائمة القراءة كاملةً من بيانات الكتاب المفتوح حالياً
+function readerBuildQueue() {
+  const queue = [];
+  if (S.book == null || !B[S.book]) return queue;
+  const book = B[S.book];
+  if (!book.babs.length) {
+    splitForSpeech(book.intro).forEach(t => queue.push({text:t, elId:null}));
+    return queue;
+  }
+  book.babs.forEach((bab, babi) => {
+    const babElId = `bab-${S.book}-${babi}`;
+    if (bab.intro) splitForSpeech(bab.intro).forEach(t => queue.push({text:t, elId:babElId}));
+    bab.fasls.forEach((fasl, fi) => {
+      const faslElId = `fasl-${S.book}-${babi}-${fi}`;
+      splitForSpeech(fasl.title).forEach(t => queue.push({text:t, elId:faslElId}));
+      splitForSpeech(fasl.content).forEach(t => queue.push({text:t, elId:faslElId}));
+    });
+  });
+  return queue;
+}
+
+function _readerClearHighlight() {
+  document.querySelectorAll('.reading-now').forEach(el => el.classList.remove('reading-now'));
+}
+function _readerHighlight(elId) {
+  _readerClearHighlight();
+  if (!elId) return;
+  const el = document.getElementById(elId);
+  if (!el) return;
+  // تأكد من فتح الباب/الفصل الذي وصلت إليه القراءة حتى يكون ظاهراً
+  el.classList.add('open');
+  const parentBab = el.closest ? el.closest('.bab') : null;
+  if (parentBab) parentBab.classList.add('open');
+  el.classList.add('reading-now');
+  el.scrollIntoView({behavior:'auto', block:'center'});
+}
+
+function readerUpdateStatus() {
+  const st = document.getElementById('reader-status');
+  const btn = document.getElementById('reader-play-btn');
+  const fab = document.getElementById('reader-fab');
+  if (!_reader.queue.length) {
+    st.textContent = S.book==null ? 'افتح كتاباً أولاً لتتمكن من الاستماع إليه' : 'اضغط تشغيل للاستماع لهذا الكتاب';
+  } else if (_reader.playing) {
+    const pct = Math.round(((_reader.idx+1)/_reader.queue.length)*100);
+    const repTxt = _reader.repeatCount>1 ? ` — تكرار ${(_reader.repeatCount-_reader.repeatLeft)+1}/${_reader.repeatCount}` : '';
+    st.textContent = `🔊 جارٍ القراءة… (${pct}%)${repTxt}`;
+  } else if (_reader.paused) {
+    st.textContent = '⏸ متوقّف مؤقتاً — اضغط تشغيل للمتابعة';
+  } else {
+    st.textContent = 'اضغط تشغيل للاستماع لهذا الكتاب';
+  }
+  btn.textContent = _reader.playing ? '⏸️' : '▶️';
+  btn.setAttribute('aria-label', _reader.playing ? 'إيقاف القراءة مؤقتاً' : 'بدء القراءة أو استئنافها');
+  fab.classList.toggle('speaking', _reader.playing);
+}
+
+function readerSpeakCurrent(forceRestart) {
+  if (!_TTS) return;
+  if (_reader.idx<0 || _reader.idx>=_reader.queue.length) { readerStop(); return; }
+  const item = _reader.queue[_reader.idx];
+  _readerHighlight(item.elId);
+  const doSpeak = () => {
+    const u = new SpeechSynthesisUtterance(item.text);
+    u.lang = 'ar-SA';
+    u.rate = _reader.rate;
+    if (_reader.voiceURI) {
+      const v = speechSynthesis.getVoices().find(vv=>vv.voiceURI===_reader.voiceURI);
+      if (v) u.voice = v;
+    }
+    u.onend = () => {
+      if (!_reader.playing) return; // أُوقفت أثناء النطق
+      if (_reader.repeatLeft > 1) {
+        // كرّر نفس المقطع (للحفظ) قبل الانتقال للمقطع التالي
+        _reader.repeatLeft--;
+        readerSpeakCurrent();
+        readerUpdateStatus();
+        return;
+      }
+      _reader.idx++;
+      _reader.repeatLeft = _reader.repeatCount;
+      if (_reader.idx < _reader.queue.length) { readerSpeakCurrent(); readerUpdateStatus(); }
+      else { readerStop(true); }
+    };
+    u.onerror = () => {
+      if (!_reader.playing) return;
+      _reader.idx++; // تجاوز الجزء المُعطوب بدل التوقف الكامل
+      _reader.repeatLeft = _reader.repeatCount;
+      if (_reader.idx < _reader.queue.length) readerSpeakCurrent();
+      else readerStop(true);
+    };
+    speechSynthesis.speak(u);
+    readerUpdateStatus();
+  };
+  // لا نستدعي cancel() إلا عند الحاجة الفعلية (مقاطعة نطق جارٍ) لأن استدعاء
+  // speak() مباشرة بعد cancel() دون مهلة قصيرة يُسبّب تأخيراً أو تجاهلاً
+  // صامتاً في متصفح Chrome تحديداً.
+  if (forceRestart || speechSynthesis.speaking || speechSynthesis.pending) {
+    speechSynthesis.cancel();
+    setTimeout(doSpeak, 60);
+  } else {
+    doSpeak();
+  }
+}
+
+function readerToggle() {
+  if (!_TTS) { toast('⚠️','متصفحك لا يدعم القراءة الصوتية'); return; }
+  if (_reader.playing) { readerPause(); return; }
+  if (S.book == null) { toast('📖','افتح كتاباً أولاً'); return; }
+  if (_reader.paused && _reader.queue.length) {
+    _reader.playing = true; _reader.paused = false;
+    readerSpeakCurrent();
+    return;
+  }
+  // بداية جديدة
+  _reader.queue = readerBuildQueue();
+  if (!_reader.queue.length) { toast('⚠️','لا يوجد نص لقراءته في هذا الكتاب'); return; }
+  _reader.idx = 0; _reader.playing = true; _reader.paused = false;
+  _reader.repeatLeft = _reader.repeatCount;
+  readerSpeakCurrent();
+}
+function readerPause() {
+  if (!_TTS) return;
+  speechSynthesis.cancel();
+  _reader.playing = false; _reader.paused = true;
+  readerUpdateStatus();
+}
+function readerStop(silent) {
+  if (_TTS) speechSynthesis.cancel();
+  _reader.playing = false; _reader.paused = false; _reader.idx = -1; _reader.queue = [];
+  _readerClearHighlight();
+  readerUpdateStatus();
+  if (!silent) toast('⏹️','تم إيقاف القراءة');
+}
+function readerNext() {
+  if (!_reader.queue.length) return;
+  const curElId = _reader.queue[_reader.idx] ? _reader.queue[_reader.idx].elId : null;
+  let i = _reader.idx+1;
+  while (i<_reader.queue.length && _reader.queue[i].elId===curElId) i++;
+  if (i>=_reader.queue.length) i = _reader.queue.length-1;
+  _reader.idx = i;
+  _reader.repeatLeft = _reader.repeatCount;
+  if (_reader.playing || _reader.paused) { _reader.playing = true; _reader.paused=false; readerSpeakCurrent(); }
+}
+function readerPrev() {
+  if (!_reader.queue.length) return;
+  const curElId = _reader.queue[_reader.idx] ? _reader.queue[_reader.idx].elId : null;
+  let i = _reader.idx-1;
+  while (i>0 && _reader.queue[i].elId===curElId) i--;
+  while (i>0 && _reader.queue[i-1] && _reader.queue[i-1].elId===_reader.queue[i].elId) i--;
+  if (i<0) i = 0;
+  _reader.idx = i;
+  _reader.repeatLeft = _reader.repeatCount;
+  if (_reader.playing || _reader.paused) { _reader.playing = true; _reader.paused=false; readerSpeakCurrent(); }
+}
+function readerSetRate(v) {
+  _reader.rate = parseFloat(v);
+  document.getElementById('reader-rate-val').textContent = parseFloat(v).toFixed(1)+'×';
+  if (_reader.playing) readerSpeakCurrent(); // إعادة نطق الجزء الحالي بالسرعة الجديدة
+}
+function readerSetRepeat(v) {
+  _reader.repeatCount = parseInt(v,10) || 1;
+  _reader.repeatLeft = _reader.repeatCount;
+  saveLS('reader_repeat', _reader.repeatCount);
+}
+function readerSetVoice(uri) {
+  _reader.voiceURI = uri;
+  if (_reader.playing) readerSpeakCurrent();
+}
+// قراءة النص المُظلَّل فقط (من شريط التحديد)
+function doSelRead() {
+  document.getElementById('sel-bar').classList.remove('show');
+  if (!_TTS) { toast('⚠️','متصفحك لا يدعم القراءة الصوتية'); return; }
+  const sel = (window.getSelection().toString().trim()) || _lastSelText;
+  if (!sel) { toast('✏️','ظلّل نصاً أولاً'); return; }
+  _reader.queue = splitForSpeech(sel).map(t => ({text:t, elId:null}));
+  _reader.idx = 0; _reader.playing = true; _reader.paused = false;
+  _reader.repeatLeft = _reader.repeatCount;
+  readerSpeakCurrent(true);
+  document.getElementById('reader-fab-wrap').classList.add('open');
+  toast('🔊','جارٍ قراءة النص المُظلَّل');
+}
+
+// ╔═══════════════════════════════════════════╗
+// ║        MEMORIZATION REVIEW (مراجعة)       ║
+// ╚═══════════════════════════════════════════╝
+let _memo = { words: [], listening: false };
+let _memoRecognition = null;
+
+function openMemo() {
+  document.getElementById('sel-bar').classList.remove('show');
+  const sel = (window.getSelection().toString().trim()) || _lastSelText;
+  if (!sel) { toast('✏️','ظلّل نصاً أولاً'); return; }
+  _memo.words = sel.split(/\s+/).filter(Boolean);
+  renderMemoBlanks();
+  document.getElementById('memo-result').textContent = '';
+  document.getElementById('memo-type-input').value = '';
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const warnEl = document.getElementById('memo-warn');
+  const micBtn = document.getElementById('memo-mic-btn');
+  if (!SR) {
+    warnEl.style.display = 'block';
+    warnEl.textContent = '⚠️ التسميع الصوتي غير مدعوم في متصفحك (يعمل غالباً في Chrome على أندرويد وويندوز). استخدم وضع الكتابة بدلاً منه.';
+    micBtn.disabled = true;
+  } else if (window.isSecureContext === false) {
+    // التعرف على الصوت يتطلب سياقاً آمناً (HTTPS أو localhost)؛ فتح الملف
+    // مباشرة من الجهاز (file://) يمنعه غالباً برسالة خطأ عامة غير واضحة.
+    warnEl.style.display = 'block';
+    warnEl.innerHTML = '⚠️ التسميع الصوتي يحتاج فتح الصفحة عبر رابط آمن (https) وليس كملف مفتوح مباشرة من جهازك. استخدم وضع الكتابة بدلاً منه، أو ارفع الملف على استضافة وافتحه من رابطها.';
+    micBtn.disabled = true;
+  } else {
+    warnEl.style.display = 'none';
+    micBtn.disabled = false;
+  }
+  document.getElementById('memo-ov').classList.add('open');
+}
+function closeMemo() {
+  document.getElementById('memo-ov').classList.remove('open');
+  memoStopListen();
+}
+function renderMemoBlanks() {
+  const box = document.getElementById('memo-blank-box');
+  box.innerHTML = _memo.words.map((w,i) => {
+    const clean = stripDiac(w).replace(/[^\u0621-\u064A\u0660-\u0669a-zA-Z0-9]/g,'');
+    const blankLen = Math.max(2, Math.min(clean.length || 3, 8));
+    return `<span class="memo-word" data-i="${i}">${'ـ'.repeat(blankLen)}</span>`;
+  }).join(' ');
+}
+function memoRevealWord(i) {
+  const el = document.querySelector(`.memo-word[data-i="${i}"]`);
+  if (el && !el.classList.contains('memo-revealed')) {
+    el.textContent = _memo.words[i];
+    el.classList.add('memo-revealed');
+  }
+}
+function memoReveal() {
+  _memo.words.forEach((_,i)=>memoRevealWord(i));
+  document.getElementById('memo-result').innerHTML = '👁️ تم إظهار النص كاملاً';
+}
+function memoReset() {
+  renderMemoBlanks();
+  document.getElementById('memo-result').textContent = '';
+  document.getElementById('memo-type-input').value = '';
+}
+// يقارن ما قاله/كتبه المستخدم بالنص الأصلي كلمة بكلمة (متجاهلاً التشكيل)
+// ويملأ الكلمات المُصابة في مكانها الصحيح تلقائياً.
+function memoCompareAndFill(inputText) {
+  const inputWords = stripDiac(inputText).trim().split(/\s+/).filter(Boolean)
+    .map(w => w.replace(/[^\u0621-\u064A\u0660-\u0669a-zA-Z0-9]/g,''));
+  let correctCount = 0;
+  _memo.words.forEach((w,i) => {
+    const target = stripDiac(w).replace(/[^\u0621-\u064A\u0660-\u0669a-zA-Z0-9]/g,'');
+    if (!target) { correctCount++; return; }
+    // نبحث في نافذة صغيرة حول موضع الكلمة نفسه لتفادي اختلاف بسيط بالترتيب
+    const ws = Math.max(0,i-2), we = Math.min(inputWords.length,i+3);
+    let matched = false;
+    for (let j=ws;j<we;j++) { if (inputWords[j] && inputWords[j]===target) { matched=true; break; } }
+    if (matched) { memoRevealWord(i); correctCount++; }
+  });
+  const pct = Math.round((correctCount/Math.max(1,_memo.words.length))*100);
+  const resEl = document.getElementById('memo-result');
+  if (pct>=85) { resEl.innerHTML = `🎉 ممتاز! تطابق ${pct}٪ — أحسنت الحفظ`; memoReveal(); }
+  else if (pct>=50) resEl.innerHTML = `👍 جيد، تطابق ${pct}٪ — راجع الكلمات المتبقية وحاول مجدداً`;
+  else resEl.innerHTML = `🔁 تطابق ${pct}٪ فقط — حاول مرة أخرى، أو اضغط "إظهار الإجابة"`;
+}
+function memoCheckTyped() {
+  const txt = document.getElementById('memo-type-input').value.trim();
+  if (!txt) { toast('✏️','اكتب شيئاً أولاً'); return; }
+  memoCompareAndFill(txt);
+}
+function memoToggleListen() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { toast('⚠️','التسميع الصوتي غير مدعوم في متصفحك'); return; }
+  if (window.isSecureContext === false) {
+    document.getElementById('memo-result').innerHTML = '⚠️ التسميع الصوتي يحتاج فتح الصفحة عبر رابط آمن (https)، لا كملف مفتوح مباشرة من جهازك. استخدم وضع الكتابة بدلاً منه.';
+    return;
+  }
+  if (_memo.listening) { memoStopListen(); return; }
+  try {
+    _memoRecognition = new SR();
+    _memoRecognition.lang = 'ar-SA';
+    _memoRecognition.interimResults = false;
+    _memoRecognition.maxAlternatives = 1;
+    _memoRecognition.onresult = (e) => {
+      const heard = e.results[0][0].transcript;
+      memoCompareAndFill(heard);
+    };
+    _memoRecognition.onerror = (e) => {
+      // نُفصّل سبب الخطأ الفعلي بدل رسالة عامة غير مفيدة، ونعرضها داخل
+      // النافذة نفسها (وليس في التوست القصير) لأن بعضها طويل نسبياً.
+      const code = e && e.error;
+      if (code === 'aborted') return; // إيقاف عادي (المستخدم ضغط إيقاف)، ليس خطأً فعلياً
+      const messages = {
+        'not-allowed': '🚫 تم رفض إذن الميكروفون. اضغط على أيقونة القفل/الميكروفون بجانب عنوان الصفحة في متصفحك واسمح بالوصول للميكروفون، ثم أعد المحاولة.',
+        'permission-denied': '🚫 تم رفض إذن الميكروفون. اسمح للموقع باستخدام الميكروفون من إعدادات المتصفح ثم أعد المحاولة.',
+        'service-not-allowed': '🚫 تم رفض إذن الميكروفون. اسمح للموقع باستخدام الميكروفون من إعدادات المتصفح ثم أعد المحاولة.',
+        'audio-capture': '🎙️ تعذّر الوصول للميكروفون، تأكد أنه موصول وغير مستخدم في تطبيق آخر حالياً.',
+        'no-speech': '🔇 لم يُسمع أي صوت. اضغط الزر ثم تحدّث مباشرة وبوضوح خلال ثوانٍ قليلة.',
+        'network': '🌐 خطأ في الاتصال بخدمة التعرف على الصوت (تحتاج إنترنت فعّال)، تحقّق من اتصالك.',
+        'language-not-supported': '⚠️ اللغة العربية غير مدعومة للتعرف الصوتي في متصفحك.',
+      };
+      document.getElementById('memo-result').innerHTML = messages[code] || `⚠️ تعذّر التعرف على الصوت (${code || 'خطأ غير معروف'})، جرّب وضع الكتابة بدلاً منه.`;
+    };
+    _memoRecognition.onend = () => { _memo.listening = false; updateMemoMicBtn(); };
+    _memoRecognition.start();
+    _memo.listening = true;
+    updateMemoMicBtn();
+  } catch(e) { toast('⚠️','تعذّر بدء الاستماع'); _memo.listening=false; updateMemoMicBtn(); }
+}
+function memoStopListen() {
+  if (_memoRecognition) { try{ _memoRecognition.stop(); }catch(e){} }
+  _memo.listening = false;
+  updateMemoMicBtn();
+}
+function updateMemoMicBtn() {
+  const btn = document.getElementById('memo-mic-btn');
+  if (!btn) return;
+  btn.textContent = _memo.listening ? '⏹️ إيقاف الاستماع' : '🎙️ ابدأ التسميع بالصوت';
+  btn.classList.toggle('listening', _memo.listening);
+}
+
 </script>
 </body>
 </html>
