@@ -32,7 +32,7 @@
   --c-sactive:  rgba(212,168,32,.18);
   --c-header:   #120a04;
   --c-htext:    #f2e4c8;
-  --font:       'Scheherazade New', serif;
+  --font:       'Scheherazade New', serif, 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI', Tahoma, Arial, sans-serif;
   --fsize:      19px;
   --lh:         2.2;
   --shadow:     0 2px 16px rgba(0,0,0,.07);
@@ -778,7 +778,7 @@ button,input,select{font-family:inherit}
   width:520px;max-width:100%;
   padding:34px 30px 66px;
   box-sizing:border-box;
-  font-family:var(--card-ff,'Scheherazade New',serif);
+  font-family:var(--card-ff,'Scheherazade New',serif), 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI', Tahoma, Arial, sans-serif;
   color:var(--card-fc,#2a1a08);
   background:var(--card-bg,#faf6ed);
   position:relative;
@@ -866,7 +866,7 @@ button,input,select{font-family:inherit}
 .memo-blank-box{
   background:var(--c-bg2);border:1px solid var(--c-border);border-radius:12px;
   padding:20px 18px;font-size:19px;line-height:2.2;text-align:center;
-  font-family:'Scheherazade New',serif;min-height:80px;margin-bottom:12px;
+  font-family:'Scheherazade New',serif, 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI', Tahoma, Arial, sans-serif;min-height:80px;margin-bottom:12px;
   word-spacing:4px;
 }
 .memo-word{
@@ -942,7 +942,7 @@ button,input,select{font-family:inherit}
 }
 .memo-card{
   position:relative;padding:18px 16px 10px;
-  font-family:'Scheherazade New',serif;
+  font-family:'Scheherazade New',serif, 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI', Tahoma, Arial, sans-serif;
   background:#faf6ed;color:#2a1a08;
   transition:box-shadow .15s;
   min-height:110px;display:flex;flex-direction:column;
@@ -967,6 +967,31 @@ button,input,select{font-family:inherit}
   font-family:var(--font);padding:2px 4px;transition:opacity .15s;
 }
 .mc-merge-btn:hover{opacity:1;text-decoration:underline}
+
+.mc-bookmark-banner{
+  display:flex;align-items:center;gap:6px;cursor:pointer;
+  background:rgba(212,168,32,.16);border:1px solid var(--c-gold);border-radius:9px;
+  padding:9px 12px;margin-bottom:14px;font-size:12px;color:var(--c-text);
+  transition:background .15s;
+}
+.mc-bookmark-banner:hover{background:rgba(212,168,32,.26)}
+.memo-card{position:relative}
+.memo-card.bookmarked{box-shadow:0 0 0 3px var(--c-gold2),0 8px 20px rgba(0,0,0,.18)!important}
+.mc-bookmark-badge{
+  position:absolute;top:-9px;left:-9px;
+  background:var(--c-gold2);color:#2a1a08;
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+.mc-card-actions{display:flex;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(140,28,28,.12)}
+.mc-action-btn{
+  flex:1;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:7px;
+  padding:6px 4px;font-size:10.5px;color:var(--c-text2);cursor:pointer;
+  font-family:var(--font);transition:all .15s;
+}
+.mc-action-btn:hover{border-color:var(--c-gold);color:var(--c-text)}
+.mc-action-btn.on{background:var(--c-gold2);color:#2a1a08;border-color:var(--c-gold2);font-weight:700}
 .mc-empty{font-size:12.5px;color:var(--c-text3);text-align:center;padding:20px}
 .mc-page-hint{font-size:12.5px;color:var(--c-text3);text-align:center;margin-top:8px;line-height:1.8}
 .mc-fasl-row{
@@ -1210,9 +1235,9 @@ button,input,select{font-family:inherit}
 [data-fs=xl]{--fsize:26px;--lh:2.4}
 
 /* FONTS */
-[data-font=sch]{--font:'Scheherazade New',serif}
-[data-font=ami]{--font:'Amiri',serif}
-[data-font=lat]{--font:'Lateef',serif}
+[data-font=sch]{--font:'Scheherazade New',serif, 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI', Tahoma, Arial, sans-serif}
+[data-font=ami]{--font:'Amiri',serif, 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI', Tahoma, Arial, sans-serif}
+[data-font=lat]{--font:'Lateef',serif, 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI', Tahoma, Arial, sans-serif}
 
 /* READING MODE */
 .reading-mode #sidebar{transform:translateX(var(--sidebar-w))}
@@ -1643,8 +1668,10 @@ button,.nav-book-btn,.nav-bab-btn,.hb,#h-toggle,.book-card{
     <div class="guide-item"><div class="guide-icon">📑</div><div class="guide-txt"><b>كيف تتصفّحها؟</b> اختر كتاباً من الفهرس فتنتقل لصفحته الخاصة ببطاقات الحفظ، حيث يظهر بجانب كل مقدمة أو فصل زر "🗂️ بطاقات الحفظ" — اضغطه لتقسيم ذلك الجزء تلقائياً إلى بطاقات صغيرة مزخرفة (مسألة إلى ثلاث حسب إعدادك)، بلا أي نص أصلي معروض معها.</div></div>
     <div class="guide-item"><div class="guide-icon">⚠️</div><div class="guide-txt"><b>ملاحظة مهمة:</b> التقسيم آلي تقريبي بحدود الفقرات وعلامات الوقف في النص، وليس تحليلاً فقهياً دقيقاً لحدود كل مسألة — فقد تحتاج بعض البطاقات نظرة تأمّل إضافية منك، ولا تُغني عن الرجوع لأصل النص في الفهرس الرئيسي.</div></div>
     <div class="guide-item"><div class="guide-icon">⚙️</div><div class="guide-txt"><b>الإعدادات:</b> من أعلى كل قسم تختار إطار البطاقات وخلفيتها وعدد المسائل بكل بطاقة — تُحفظ اختياراتك وتُطبَّق على كل الأقسام تلقائياً.</div></div>
-    <div class="guide-item"><div class="guide-icon">🔗</div><div class="guide-txt"><b>دمج بطاقتين يدوياً:</b> إن رأيت بطاقتين متجاورتين ينبغي أن تكونا واحدة، اضغط "⬅ دمج بالسابقة" أو "دمج باللاحقة ➡" أسفل أي بطاقة — يُحفظ دمجك ويبقى كما رتّبته في زياراتك القادمة، مع زر "🔄 إعادة الضبط التلقائي" إن أردت التراجع عن كل تعديلاتك لذلك القسم.</div></div>
+    <div class="guide-item"><div class="guide-icon">🔗</div><div class="guide-txt"><b>دمج بطاقتين يدوياً:</b> إن رأيت بطاقتين متجاورتين ينبغي أن تكونا واحدة، اضغط "← دمج بالسابقة" أو "دمج باللاحقة →" أسفل أي بطاقة — يُحفظ دمجك ويبقى كما رتّبته في زياراتك القادمة، مع زر "🔄 إعادة الضبط التلقائي" إن أردت التراجع عن كل تعديلاتك لذلك القسم.</div></div>
     <div class="guide-item"><div class="guide-icon">🎯</div><div class="guide-txt"><b>الضغط على أي بطاقة:</b> يفتح فوراً نافذة "مراجعة الحفظ" بنص تلك البطاقة مطموساً، لتُسمِّعها بصوتك أو بالكتابة مباشرة دون تظليل يدوي.</div></div>
+    <div class="guide-item"><div class="guide-icon">🔖</div><div class="guide-txt"><b>ضع علامة "توقفت هنا":</b> زر أسفل كل بطاقة لوضع علامة مرجعية عليها (علامة واحدة لكل قسم، كعلامة الكتاب الورقي)، فتظهر شارة ذهبية على البطاقة وشريط تذكير أعلى القسم يعيدك إليها بضغطة واحدة في زيارتك القادمة.</div></div>
+    <div class="guide-item"><div class="guide-icon">🖼️</div><div class="guide-txt"><b>تصدير / مشاركة البطاقة:</b> زر آخر أسفل كل بطاقة يفتح نافذة تصدير البطاقة (بكل خياراتها من إطار وخلفية وخط) مُعبَّأة بنص تلك البطاقة تحديداً، لتنزيلها كصورة أو مشاركتها مباشرة عبر واتساب أو تيليجرام.</div></div>
 
     <div class="guide-section-title">✋ عند تظليل أي نص</div>
     <div class="guide-item"><div class="guide-icon">📋</div><div class="guide-txt"><b>نسخ:</b> ينسخ النص المظلَّل إلى الحافظة مباشرة لتلصقه في أي مكان آخر.</div></div>
@@ -1991,7 +2018,7 @@ function renderMemoCardsBookView(bi, cb) {
             ${bab.intro ? _mcTabHtml(bi+'-'+babi+'-intro') : ''}
             ${bab.fasls.map((fasl,fi) => `
               <div class="mc-fasl-row">
-                <span class="mc-fasl-title">◆ ${fasl.title}</span>
+                <span class="mc-fasl-title"><span class="fasl-dot" style="display:inline-block;margin-left:6px"></span>${fasl.title}</span>
                 ${_mcTabHtml(bi+'-'+babi+'-'+fi)}
               </div>`).join('')}
           </div>
@@ -2464,12 +2491,13 @@ function toggleReading() {
 
 function restorePrefs() {
   // تنظيف لمرة واحدة: أي بطاقات حفظ مدمجة يدوياً محفوظة من قبل كانت قد
-  // تحتفظ برمز الفاصل القديم (﴿ ﴾) قبل استبداله بالفاصل الزخرفي الجديد.
+  // تحتفظ برموز فواصل قديمة (﴿ ﴾ ثم ◆) قد لا يدعمها خط بعض الأجهزة
+  // (تظهر كمربعات فارغة)، فنستبدلها بنقطة وسطى بسيطة آمنة الخط دائماً.
   try {
     Object.keys(localStorage).filter(k => k.startsWith('mc_merged_')).forEach(k => {
       const v = localStorage.getItem(k);
-      if (v && v.includes('﴿')) {
-        localStorage.setItem(k, v.replace(/\s*﴿ ﴾\s*/g, '  ◆  '));
+      if (v && (v.includes('﴿') || v.includes('◆'))) {
+        localStorage.setItem(k, v.replace(/\s*﴿ ﴾\s*/g, '   ·   ').replace(/\s*◆\s*/g, '   ·   '));
       }
     });
   } catch(e) {}
@@ -2649,11 +2677,6 @@ function openCardExport() {
   _lastSelText = sel || _lastSelText;
   if (!_lastSelText) { toast('✏️','ظلّل نصاً أولاً'); return; }
 
-  // Header: fixed work title + author (لا تتغيّر باختلاف الكتاب المعروض)
-  document.getElementById('cp-book-title').textContent = 'إتمام المطالب بتكميل دليل الطالب';
-  document.getElementById('cp-book-author').textContent = 'تأليف: كُلَيب بن أحمد بن ضيف الله الزهراني';
-
-  // Source line: الكتاب + الباب الذي أُخذت منه الفقرة المظلَّلة
   let src = '';
   if (S.book!=null && B[S.book]) {
     src = B[S.book].title;
@@ -2661,9 +2684,17 @@ function openCardExport() {
       src += '  —  ' + B[S.book].babs[S.bab].title;
     }
   }
-  document.getElementById('cp-source').textContent = src;
+  startCardExportWithText(_lastSelText, src);
+}
+// يفتح نافذة تصدير البطاقة بأي نص ومصدر مُعطى مباشرة (تُستخدم من التظليل، ومن بطاقات الحفظ)
+function startCardExportWithText(text, srcLabel) {
+  _lastSelText = text;
 
-  document.getElementById('card-body').innerText = _lastSelText;
+  // Header: fixed work title + author (لا تتغيّر باختلاف الكتاب المعروض)
+  document.getElementById('cp-book-title').textContent = 'إتمام المطالب بتكميل دليل الطالب';
+  document.getElementById('cp-book-author').textContent = 'تأليف: كُلَيب بن أحمد بن ضيف الله الزهراني';
+  document.getElementById('cp-source').textContent = srcLabel || '';
+  document.getElementById('card-body').innerText = text;
 
   // اليوم + التاريخ الهجري + الميلادي + الوقت، في زاوية البطاقة
   const now = new Date();
@@ -3408,7 +3439,7 @@ function updateMemoMicBtn() {
 // ╚═══════════════════════════════════════════╝
 const MC_MAX_CHARS = 190;   // هدف تقريبي لـ "٤ أسطر" (يختلف فعلياً حسب حجم الخط وعرض البطاقة)
 const MC_MIN_CHARS = 25;    // أقل طول مقبول لوحدة "مسألة" مستقلة قبل دمجها بما يليها
-const MC_SEP = '  ◆  ';   // فاصل زخرفي بين مسائل داخل نفس البطاقة
+const MC_SEP = '   ·   ';   // فاصل بسيط بين مسائل داخل نفس البطاقة (نقطة وسطى آمنة الخط، بلا رموز قد لا يدعمها بعض الأجهزة)
 
 let _mcSettings = {
   frame: loadLS('mc_frame','frame-gold'),
@@ -3461,6 +3492,17 @@ function _mcResolveText(key) {
   if (parts.length === 3) return ((book.babs[parts[1]] || {}).fasls[parts[2]] || {}).content || '';
   return null;
 }
+// يبني تسمية مصدر مقروءة (اسم الكتاب/الباب/الفصل) من مفتاح البطاقة، لعرضها
+// كمصدر عند تصدير بطاقة الحفظ كصورة
+function _mcResolveLabel(key) {
+  const parts = key.split('-').map(p => p==='intro' ? p : parseInt(p,10));
+  const book = B[parts[0]];
+  if (!book) return '';
+  if (parts.length === 2 && parts[1] === 'intro') return book.title + '  —  المقدمة';
+  if (parts.length === 3 && parts[2] === 'intro') return book.title + '  —  ' + ((book.babs[parts[1]]||{}).title||'') + '  —  مقدمة الباب';
+  if (parts.length === 3) return book.title + '  —  ' + ((book.babs[parts[1]]||{}).title||'');
+  return book.title;
+}
 
 // يبني بطاقات مصدر واحد: يستخدم دمجاً يدوياً محفوظاً إن وُجد (المستخدم
 // عدّله سابقاً)، وإلا يُولّد تلقائياً حسب إعدادات المستخدم الحالية.
@@ -3483,6 +3525,17 @@ function buildMemoCardsForSource(key) {
   return cards;
 }
 
+// يحوّل مفتاح المصدر إلى تسمية وصفية مقروءة (لاستخدامها كمصدر عند تصدير البطاقة)
+function _mcResolveLabel(key) {
+  const parts = key.split('-').map(p => p==='intro' ? p : parseInt(p,10));
+  const book = B[parts[0]];
+  if (!book) return '';
+  if (parts.length === 2 && parts[1] === 'intro') return book.title + '  —  المقدمة';
+  if (parts.length === 3 && parts[2] === 'intro') return book.title + '  —  ' + ((book.babs[parts[1]]||{}).title||'') + '  —  مقدمة الباب';
+  if (parts.length === 3) return book.title + '  —  ' + ((book.babs[parts[1]]||{}).title||'');
+  return book.title;
+}
+
 function toggleMemoCardsInline(key, btnEl) {
   const body = document.getElementById('mc-inline-'+key);
   const wasOpen = body.classList.contains('open');
@@ -3497,9 +3550,14 @@ function renderMemoCardsInline(key) {
   const cards = buildMemoCardsForSource(key);
   if (!cards.length) { body.innerHTML = '<div class="mc-empty">لا يوجد نص كافٍ هنا لإنشاء بطاقات حفظ.</div>'; return; }
   const hasOverride = !!loadLS('mc_merged_'+key, null);
+  const bookmarkedIdx = loadLS('mc_bookmark_'+key, null);
 
   body.innerHTML = `
     <div class="mc-note">⚠️ تقسيم تلقائي تقريبي بحدود الفقرات وعلامات الوقف، وليس تحليلاً فقهياً دقيقاً لحدود كل مسألة — راجع أصل النص أعلاه عند اللبس. يمكنك دمج أي بطاقتين متجاورتين يدوياً بالأزرار أسفل كل بطاقة.</div>
+    ${bookmarkedIdx!=null && cards[bookmarkedIdx] ? `
+    <div class="mc-bookmark-banner" onclick="mcScrollToBookmark('${key}',${bookmarkedIdx})" role="button" tabindex="0">
+      🔖 آخر موضع توقفت عنده: البطاقة رقم ${bookmarkedIdx+1} — اضغط للانتقال إليها
+    </div>` : ''}
     <div class="mc-settings">
       <label>إطار البطاقات
         <select onchange="mcSetSetting('frame', this.value, '${key}')">
@@ -3528,16 +3586,54 @@ function renderMemoCardsInline(key) {
       ${hasOverride ? `<button class="mc-reset-btn" onclick="mcResetMerge('${key}')">🔄 إعادة الضبط التلقائي لهذا القسم</button>` : ''}
     </div>
     <div class="mc-grid">
-      ${cards.map((text,i) => `
-        <div class="memo-card ${_mcSettings.frame}" data-bg="${_mcSettings.bg}">
+      ${cards.map((text,i) => {
+        const isBm = bookmarkedIdx === i;
+        return `
+        <div class="memo-card ${_mcSettings.frame}${isBm?' bookmarked':''}" data-bg="${_mcSettings.bg}" id="mc-card-${key}-${i}">
+          ${isBm ? '<div class="mc-bookmark-badge" title="آخر موضع توقفت عنده">🔖</div>' : ''}
           <div class="mc-txt" onclick="startCardMemo2('${key}',${i})" role="button" tabindex="0" aria-label="بطاقة حفظ رقم ${i+1}، اضغط لبدء التسميع">${text}</div>
           <div class="mc-hint" onclick="startCardMemo2('${key}',${i})">🎯 اضغط لتسميعها</div>
-          <div class="mc-merge-row">
-            ${i>0 ? `<button class="mc-merge-btn" onclick="mcMergeCard('${key}',${i},'prev')" title="دمج مع البطاقة السابقة">⬅ دمج بالسابقة</button>` : '<span></span>'}
-            ${i<cards.length-1 ? `<button class="mc-merge-btn" onclick="mcMergeCard('${key}',${i},'next')" title="دمج مع البطاقة التالية">دمج باللاحقة ➡</button>` : '<span></span>'}
+          <div class="mc-card-actions">
+            <button class="mc-action-btn${isBm?' on':''}" onclick="mcToggleBookmark('${key}',${i})" title="${isBm?'إزالة العلامة':'ضع علامة هنا — توقفت عند هذه البطاقة'}">${isBm?'🔖 توقفت هنا':'🔖 ضع علامة'}</button>
+            <button class="mc-action-btn" onclick="startCardExportFromMemo('${key}',${i})" title="تصدير كصورة أو مشاركة عبر واتساب/تيليجرام">🖼️ تصدير / مشاركة</button>
           </div>
-        </div>`).join('')}
+          <div class="mc-merge-row">
+            ${i>0 ? `<button class="mc-merge-btn" onclick="mcMergeCard('${key}',${i},'prev')" title="دمج مع البطاقة السابقة">← دمج بالسابقة</button>` : '<span></span>'}
+            ${i<cards.length-1 ? `<button class="mc-merge-btn" onclick="mcMergeCard('${key}',${i},'next')" title="دمج مع البطاقة التالية">دمج باللاحقة →</button>` : '<span></span>'}
+          </div>
+        </div>`;
+      }).join('')}
     </div>`;
+}
+
+// يضع/يزيل علامة "توقفت هنا" على بطاقة مُعيّنة (علامة واحدة فقط لكل قسم،
+// كعلامة الكتاب الورقي: تضعها في مكان جديد فتنتقل تلقائياً من مكانها القديم)
+function mcToggleBookmark(key, idx) {
+  const current = loadLS('mc_bookmark_'+key, null);
+  if (current === idx) {
+    localStorage.removeItem('mc_bookmark_'+key);
+    toast('🔖','أُزيلت العلامة المرجعية');
+  } else {
+    saveLS('mc_bookmark_'+key, idx);
+    toast('🔖',`تم وضع علامة عند البطاقة رقم ${idx+1}`);
+  }
+  renderMemoCardsInline(key);
+}
+function mcScrollToBookmark(key, idx) {
+  const el = document.getElementById(`mc-card-${key}-${idx}`);
+  if (!el) return;
+  el.scrollIntoView({behavior:'auto', block:'center'});
+  el.style.outline = '3px solid var(--c-gold2)';
+  setTimeout(() => el.style.outline = '', 1800);
+}
+
+// يفتح نافذة "تصدير بطاقة" الموجودة أصلاً (بكل خياراتها: إطار/خلفية/خط/تنزيل
+// كصورة/مشاركة مباشرة عبر واتساب أو تيليجرام) مُعبَّأة بنص هذه البطاقة تحديداً
+function startCardExportFromMemo(key, idx) {
+  const cards = _mcCache[key];
+  if (!cards || !cards[idx]) return;
+  const text = cards[idx].replace(/\s*·\s*/g, '  ');
+  startCardExportWithText(text, _mcResolveLabel(key));
 }
 
 function mcSetSetting(settingKey, value, currentKey) {
@@ -3577,7 +3673,7 @@ function startCardMemo2(key, cardIdx) {
   const cards = _mcCache[key];
   if (!cards || !cards[cardIdx]) return;
   // النص الفعلي للمراجعة بلا الفواصل الزخرفية بين المسائل داخل البطاقة
-  const text = cards[cardIdx].replace(/\s*◆\s*/g, '  ');
+  const text = cards[cardIdx].replace(/\s*·\s*/g, '  ');
   startMemoWithText(text);
 }
 
